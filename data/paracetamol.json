@@ -1,0 +1,110 @@
+{
+  "drugName": "Paracetamol (Acetaminophen)",
+  "verificationStatus": "verified",
+  "lastUpdated": "2025-12-13",
+  
+  "indications": [
+    {
+      "condition": "Fever / Pain",
+      "dosing": "15 mg/kg/dose (Neonates: 10 mg/kg/dose)",
+      "frequency": "every 4-6 hours",
+      "duration": "as needed (max 4 times/day)",
+      "source": "STG Children & Adolescents, Tanzania 2017; STG and NEML Tanzania 2021",
+      "notes": "Neonatal dosing: 10 mg/kg/dose [Guideline for Neonatal Care, Tz 2019]"
+    }
+  ],
+  
+  "formulations": {
+    "suspension": [
+      {
+        "concentration": "120mg/5ml",
+        "common": true
+      }
+    ],
+    "tablet": [
+      {
+        "strength": "500mg",
+        "divisible": true
+      }
+    ]
+  },
+  
+  "importantNotes": [
+    "Maximum single dose: 1000 mg",
+    "Maximum daily dose: 4000 mg/day (up to 4 times/day)",
+    "Give every 4-6 hours",
+    "Do not exceed recommended doses",
+    "Neonates (0-28 days): Use 10 mg/kg/dose only"
+  ],
+  
+  "ageRestrictions": {
+    "neonate": {
+      "allowed": true,
+      "specialDosing": true,
+      "dose": "10 mg/kg/dose",
+      "specialInstructions": "Use 10 mg/kg (NOT 15 mg/kg) for neonates. Source: Guideline for Neonatal Care, Tz 2019"
+    },
+    "infant": {
+      "allowed": true,
+      "specialDosing": false,
+      "dose": "15 mg/kg/dose"
+    },
+    "child": {
+      "allowed": true,
+      "specialDosing": false,
+      "dose": "15 mg/kg/dose"
+    },
+    "adolescent": {
+      "allowed": true,
+      "specialDosing": false,
+      "dose": "15 mg/kg/dose"
+    }
+  },
+  
+  "maximumDose": {
+    "singleDose": "15 mg/kg (max 1000 mg per dose)",
+    "dailyDose": "60 mg/kg/day (max 4000 mg/day, up to 4 times/day)"
+  },
+  
+  "moreInformation": {
+    "overdoseWarning": {
+      "title": "⚠️ Can be dangerous in overdose!",
+      "definition": "Overdose = more than 150 mg/kg as single dose",
+      "management": [
+        {
+          "timing": "If within 4 hours of ingestion",
+          "actions": [
+            "Give activated charcoal OR induce vomiting",
+            "Proceed to antidote if needed"
+          ]
+        },
+        {
+          "antidote": "Oral Acetylcysteine (more available in Tanzania)",
+          "dosing": [
+            "Loading dose: 140 mg/kg immediately",
+            "Maintenance: 70 mg/kg every 4 hours × 17 doses"
+          ],
+          "administration": "Dilute to 5% solution with juice/carbonated drink (bad taste)",
+          "notes": [
+            "If vomiting within 60 minutes → repeat dose",
+            "Most effective within 8 hours of overdose"
+          ],
+          "source": "Acetaminophen Toxicity Treatment & Management, Medscape 2024"
+        },
+        {
+          "antidote": "IV Acetylcysteine (if available)",
+          "dosing": [
+            "Children <20kg:",
+            "- Loading: 150 mg/kg in 3 ml/kg 5% glucose over 15 min",
+            "- Then: 50 mg/kg in 7 ml/kg 5% glucose over 4 hours",
+            "- Then: 100 mg/kg in 14 ml/kg 5% glucose over 16 hours"
+          ],
+          "notes": [
+            "Continue acetylcysteine if late presentation or elevated liver enzymes"
+          ],
+          "source": "WHO Pocket Book of Hospital Care for Children 2013"
+        }
+      ]
+    }
+  }
+}
