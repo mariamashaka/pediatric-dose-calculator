@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pediatric Drug Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>PEDIATRIC DRUG CALCULATOR</h1>
+            <p class="subtitle">Evidence-based dosing for pediatric patients</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="content">
+            
+            <!-- Step 1: Drug Search -->
+            <section id="step-search" class="step active">
+                <h2>🔍 Search Drug</h2>
+                <div class="search-wrapper">
+                    <input 
+                        type="text" 
+                        id="drug-search" 
+                        class="search-input" 
+                        placeholder="Type drug name..."
+                        autocomplete="off"
+                    >
+                    <div id="autocomplete-results" class="autocomplete-dropdown hidden"></div>
+                </div>
+                <div class="or-divider">OR</div>
+                <label for="drug-select">Select from list:</label>
+                <select id="drug-select" class="drug-dropdown">
+                    <option value="">-- Select a drug --</option>
+                </select>
+                <div class="button-group">
+                    <button id="btn-next-1" class="btn btn-primary" disabled>Next →</button>
+                </div>
+            </section>
+
+            <!-- Step 2: Clinical Information (Indications) -->
+            <section id="step-indication" class="step hidden">
+                <h2>📖 <span id="drug-name-display"></span> - Dosing by Indication</h2>
+                <p class="instruction">Choose the condition you are treating:</p>
+                
+                <div id="indications-list" class="options-list">
+                    <!-- Will be populated dynamically -->
+                </div>
+
+                <div class="custom-dose-wrapper">
+                    <label>
+                        <input type="radio" name="indication" value="custom" id="custom-dose-radio">
+                        Custom dose:
+                    </label>
+                    <input 
+                        type="number" 
+                        id="custom-dose-input" 
+                        class="input-small" 
+                        placeholder="0"
+                        step="0.1"
+                        min="0"
+                        disabled
+                    > mg/kg
+                </div>
+
+                <div class="button-group">
+                    <button id="btn-back-2" class="btn btn-secondary">← Back</button>
+                    <button id="btn-next-2" class="btn btn-primary" disabled>Next →</button>
+                </div>
+            </section>
+
+            <!-- Step 3: Patient Weight -->
+            <section id="step-weight" class="step hidden">
+                <h2>⚖️ Patient Weight</h2>
+                
+                <label for="patient-weight">Enter patient weight:</label>
+                <div class="input-with-unit">
+                    <input 
+                        type="number" 
+                        id="patient-weight" 
+                        class="input-medium" 
+                        placeholder="0"
+                        step="0.1"
+                        min="0.5"
+                        max="150"
+                    >
+                    <span class="unit">kg</span>
+                </div>
+
+                <label class="optional-label">Age group (optional):</label>
+                <div class="age-group-options">
+                    <label>
+                        <input type="radio" name="age-group" value="neonate">
+                        Neonate (0-28 days)
+                    </label>
+                    <label>
+                        <input type="radio" name="age-group" value="infant">
+                        Infant (1-12 months)
+                    </label>
+                    <label>
+                        <input type="radio" name="age-group" value="child">
+                        Child (1-12 years)
+                    </label>
+                    <label>
+                        <input type="radio" name="age-group" value="adolescent">
+                        Adolescent (13-18 years)
+                    </label>
+                </div>
+
+                <div class="button-group">
+                    <button id="btn-back-3" class="btn btn-secondary">← Back</button>
+                    <button id="btn-next-3" class="btn btn-primary" disabled>Next →</button>
+                </div>
+            </section>
+
+            <!-- Step 4: Formulation Type -->
+            <section id="step-formulation" class="step hidden">
+                <h2>💊 Select Formulation</h2>
+                <p class="instruction">What formulation will you use?</p>
+                
+                <div id="formulation-options" class="options-list">
+                    <!-- Will be populated dynamically -->
+                </div>
+
+                <div class="button-group">
+                    <button id="btn-back-4" class="btn btn-secondary">← Back</button>
+                    <button id="btn-next-4" class="btn btn-primary" disabled>Next →</button>
+                </div>
+            </section>
+
+            <!-- Step 5: Concentration -->
+            <section id="step-concentration" class="step hidden">
+                <h2>🧪 Select Concentration</h2>
+                <p class="instruction">Choose the available concentration:</p>
+                
+                <div id="concentration-options" class="options-list">
+                    <!-- Will be populated dynamically -->
+                </div>
+
+                <div class="custom-concentration-wrapper hidden" id="custom-concentration-section">
+                    <label>Custom concentration:</label>
+                    <div class="concentration-inputs">
+                        <input 
+                            type="number" 
+                            id="custom-conc-mg" 
+                            class="input-small" 
+                            placeholder="0"
+                            step="1"
+                            min="0"
+                            disabled
+                        > mg in
+                        <input 
+                            type="number" 
+                            id="custom-conc-ml" 
+                            class="input-small" 
+                            placeholder="0"
+                            step="0.1"
+                            min="0"
+                            disabled
+                        > ml
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button id="btn-back-5" class="btn btn-secondary">← Back</button>
+                    <button id="btn-calculate" class="btn btn-success" disabled>Calculate 🧮</button>
+                </div>
+            </section>
+
+            <!-- Step 6: Results -->
+            <section id="step-results" class="step hidden">
+                <h2>📊 RESULT</h2>
+                
+                <div class="result-card">
+                    <div class="result-section">
+                        <h3>Patient Information</h3>
+                        <p id="result-patient-info"></p>
+                    </div>
+
+                    <div class="result-section">
+                        <h3>Prescribed Dose</h3>
+                        <p id="result-dose-info"></p>
+                    </div>
+
+                    <div class="result-section highlight">
+                        <h3>💊 Administration</h3>
+                        <p id="result-administration" class="administration-text"></p>
+                    </div>
+
+                    <div class="result-section important" id="important-notes-section">
+                        <h3>⚠️ Important</h3>
+                        <ul id="important-notes-list"></ul>
+                    </div>
+
+                    <div class="result-section source">
+                        <p id="result-source"></p>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button id="btn-print" class="btn btn-secondary">🖨️ Print</button>
+                    <button id="btn-new-calc" class="btn btn-primary">🔄 New Calculation</button>
+                    <button id="btn-back-6" class="btn btn-secondary">← Back</button>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p class="developer">Developed by Dr. Mariia Rukavishnikova</p>
+            <p class="copyright">© 2026 Drug Dosage Calculator</p>
+            <div class="development-notice">
+                <p class="notice-text">⚠️ Calculator is under active development</p>
+                <p class="contact-text">Questions or suggestions? WhatsApp: <a href="https://wa.me/255756977282">+255 756 977 282</a></p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Print Template (Hidden) -->
+    <div id="print-template" class="print-only">
+        <!-- Will be populated when printing -->
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
