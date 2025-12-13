@@ -375,9 +375,21 @@ function calculateDose() {
         source = 'User-specified';
     } else {
         const ind = calculationState.indication;
-        // Extract mg/kg from dosing string (simplified - may need more sophisticated parsing)
-        const match = ind.dosing.match(/(\d+\.?\d*)\s*mg\/kg/);
-        mgPerKg = match ? parseFloat(match[1]) : 10; // Default fallback
+        
+        // Check for neonatal special dosing
+        if (calculationState.ageGroup === 'neonate' && 
+            selectedDrugData.ageRestrictions && 
+            selectedDrugData.ageRestrictions.neonate && 
+            selectedDrugData.ageRestrictions.neonate.specialDosing) {
+            
+            // Use neonatal dose
+            const neonateDoseMatch = selectedDrugData.ageRestrictions.neonate.dose.match(/(\d+\.?\d*)\s*mg\/kg/);
+            mgPerKg = neonateDoseMatch ? parseFloat(neonateDoseMatch[1]) : 10;
+        } else {
+            // Extract mg/kg from dosing string (simplified - may need more sophisticated parsing)
+            const match = ind.dosing.match(/(\d+\.?\d*)\s*mg\/kg/);
+            mgPerKg = match ? parseFloat(match[1]) : 15; // Default fallback
+        }
         
         indication = ind.condition;
         source = ind.source;
