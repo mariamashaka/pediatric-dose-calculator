@@ -1,0 +1,124 @@
+{
+  "drugName": "Azithromycin",
+  "verificationStatus": "verified",
+  "lastUpdated": "2025-12-13",
+  
+  "indications": [
+    {
+      "condition": "Pharyngotonsillitis",
+      "regimens": [
+        {
+          "name": "Tanzania 3-day course",
+          "dosing": "10 mg/kg once daily",
+          "frequency": "once daily",
+          "duration": "3 days",
+          "source": "STG Children & Adolescents, Tanzania 2017"
+        },
+        {
+          "name": "International 5-day course",
+          "dosing": "12 mg/kg once daily",
+          "frequency": "once daily",
+          "duration": "5 days",
+          "maxDose": "500 mg",
+          "source": "AAP Clinical Approach to Tonsillitis 2017"
+        }
+      ]
+    },
+    {
+      "condition": "Acute otitis media",
+      "regimens": [
+        {
+          "name": "Tanzania 3-day course",
+          "dosing": "10 mg/kg once daily",
+          "frequency": "once daily",
+          "duration": "3 days",
+          "source": "STG Children & Adolescents, Tanzania 2017"
+        },
+        {
+          "name": "Tanzania 5-day course",
+          "dosing": "10 mg/kg once daily",
+          "frequency": "once daily",
+          "duration": "5 days",
+          "source": "STG and NEML Tanzania 2021",
+          "notes": "Conflicting durations within Tanzania guidelines"
+        }
+      ]
+    },
+    {
+      "condition": "Pneumonia/Bronchitis (atypical)",
+      "regimens": [
+        {
+          "name": "Tanzania guideline",
+          "dosing": "10 mg/kg once daily",
+          "frequency": "once daily",
+          "duration": "5 days",
+          "source": "STG Children & Adolescents, Tanzania 2017"
+        },
+        {
+          "name": "International with loading dose",
+          "dosing": "10 mg/kg day 1, then 5 mg/kg days 2-5",
+          "frequency": "once daily",
+          "duration": "5 days (with loading dose)",
+          "maxDose": "500 mg day 1, 250 mg days 2-5",
+          "source": "Clinical Practice Guidelines by PIDS and IDSA 2011"
+        }
+      ]
+    },
+    {
+      "condition": "Typhoid fever",
+      "regimens": [
+        {
+          "name": "Tanzania guideline",
+          "dosing": "10 mg/kg once daily",
+          "frequency": "once daily",
+          "duration": "7 days",
+          "source": "STG Children & Adolescents, Tanzania 2017",
+          "warning": "⚠️ CRITICAL: Half the WHO recommended dose"
+        },
+        {
+          "name": "WHO recommendation",
+          "dosing": "20 mg/kg once daily",
+          "frequency": "once daily",
+          "duration": "5-7 days",
+          "source": "WHO Pocket Book of Hospital Care for Children 2013",
+          "warning": "⚠️ CRITICAL: Double the Tanzania dose"
+        }
+      ]
+    }
+  ],
+  
+  "formulations": {
+    "suspension": [
+      {
+        "concentration": "200mg/5ml",
+        "common": true,
+        "bottleSizes": [15, 30]
+      }
+    ],
+    "tablet": [
+      {
+        "strength": "250mg",
+        "divisible": false
+      },
+      {
+        "strength": "500mg",
+        "divisible": false
+      }
+    ]
+  },
+  
+  "importantNotes": [
+    "Give 1 hour before or 2 hours after food",
+    "Maximum daily dose: 500 mg",
+    "Calculate total bottle volume needed for full course"
+  ],
+  
+  "moreInformation": {
+    "bottleWarning": {
+      "title": "⚠️ CALCULATE TOTAL BOTTLE NEEDED",
+      "warning": "Standard bottle is 15ml (600mg at 200mg/5ml)",
+      "calculation": "Total course volume = (daily dose in ml) × (days)",
+      "recommendation": "Always prescribe enough bottles for full course to avoid resistance"
+    }
+  }
+}
