@@ -222,12 +222,12 @@
         {
             "strength": "250mg",
             "divisible": false,
-            "divisibleParts": [0.5, 1]  // Можно половинку и целую
+            "divisibleParts": [0.5, 1]
         },
         {
             "strength": "500mg",
             "divisible": false,
-            "divisibleParts": [0.5, 1]  // Можно половинку и целую
+            "divisibleParts": [0.5, 1]
         }
     ]
 },
