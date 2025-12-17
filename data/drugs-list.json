@@ -4,4 +4,9 @@
     "name": "Paracetamol (Acetaminophen)",
     "verified": true
   }
+    {
+    "id": "azithromycin",
+    "name": "Azithromycin",
+    "verified": true
+  }
 ]
