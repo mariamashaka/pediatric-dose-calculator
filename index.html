@@ -358,16 +358,23 @@
                 </div>
             </section>
 
-            <!-- Step 2: Indication -->
-            <section id="step-2" class="step">
-                <h2 id="drug-name-title"></h2>
-                <label>Select indication:</label>
-                <div id="indications-container" class="radio-group"></div>
-                <div class="button-group">
-                    <button id="btn-back-2" class="btn-secondary">← Back</button>
-                    <button id="btn-next-2" class="btn-primary" disabled>Next →</button>
-                </div>
-            </section>
+<!-- Step 2: Indication -->
+<section id="step-2" class="step">
+    <h2 id="drug-name-title"></h2>
+    <label>Select indication:</label>
+    <div id="indications-container" class="radio-group"></div>
+    
+    <!-- НОВЫЙ БЛОК: Выбор схемы лечения (показывается после выбора показания) -->
+    <div id="regimen-container" style="display: none; margin-top: 20px;">
+        <label>Select dosing regimen:</label>
+        <div id="regimen-options" class="radio-group"></div>
+    </div>
+    
+    <div class="button-group">
+        <button id="btn-back-2" class="btn-secondary">← Back</button>
+        <button id="btn-next-2" class="btn-primary" disabled>Next →</button>
+    </div>
+</section>
 
             <!-- Step 3: Patient Weight -->
             <section id="step-3" class="step">
