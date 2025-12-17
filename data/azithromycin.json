@@ -218,19 +218,18 @@
             "bottleSizes": [15, 30]
         }
     ],
-    "tablet": [
-        {
-            "strength": "250mg",
-            "divisible": false,
-            "divisibleParts": [0.5, 1]
-        },
-        {
-            "strength": "500mg",
-            "divisible": false,
-            "divisibleParts": [0.5, 1]
-        }
-    ]
-},
+"tablet": [
+    {
+        "strength": "250mg",
+        "divisible": true,
+        "divisibleParts": [0.5, 1]
+    },
+    {
+        "strength": "500mg", 
+        "divisible": true,
+        "divisibleParts": [0.5, 1]
+    }
+],
   
   "importantNotes": [
     "Give 1 hour before or 2 hours after food",
