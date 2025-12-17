@@ -765,126 +765,166 @@
             }
         }
         
-        // Calculate dose
-        function calculate() {
-            const ind = calculation.indication;
+// Calculate dose
+function calculate() {
+    const ind = calculation.indication;
+    
+    // Get mg/kg dose
+    let mgPerKg = 15; // default
+    
+    // Check for neonatal special dosing
+    if (calculation.ageGroup === 'neonate' && 
+        drugData.ageRestrictions?.neonate?.specialDosing) {
+        const match = drugData.ageRestrictions.neonate.dose.match(/(\d+\.?\d*)/);
+        mgPerKg = match ? parseFloat(match[1]) : 10;
+    } else {
+        const match = ind.dosing.match(/(\d+\.?\d*)\s*mg\/kg/);
+        mgPerKg = match ? parseFloat(match[1]) : 15;
+    }
+    
+    // Calculate dose in mg
+    const doseMg = mgPerKg * calculation.weight;
+    
+    // Calculate volume or tablets
+    let adminText = '';
+    let tabletOptionsHtml = '';
+    
+    if (calculation.formulation === 'suspension') {
+        let mgPerMl;
+        
+        if (calculation.concentration.custom) {
+            mgPerMl = calculation.concentration.mg / calculation.concentration.ml;
+        } else {
+            const parts = calculation.concentration.concentration.match(/(\d+\.?\d*)mg\/(\d+\.?\d*)ml/);
+            mgPerMl = parseFloat(parts[1]) / parseFloat(parts[2]);
+        }
+        
+        const volumeMl = doseMg / mgPerMl;
+        adminText = `${volumeMl.toFixed(1)} ml (suspension ${calculation.concentration.concentration}) ${ind.frequency}, ${ind.duration}`;
+        
+    } else {
+        // Tablets with divisible parts
+        const strength = parseFloat(calculation.concentration.strength.match(/(\d+)/)[1]);
+        const exactTablets = doseMg / strength;
+        
+        if (calculation.concentration.divisible && calculation.concentration.divisibleParts) {
+            // Show calculated dose first
+            adminText = `Calculated: ${exactTablets.toFixed(2)} tablet(s) = ${doseMg.toFixed(1)} mg`;
             
-            // Get mg/kg dose
-            let mgPerKg = 15; // default
-            
-            // Check for neonatal special dosing
-            if (calculation.ageGroup === 'neonate' && 
-                drugData.ageRestrictions?.neonate?.specialDosing) {
-                const match = drugData.ageRestrictions.neonate.dose.match(/(\d+\.?\d*)/);
-                mgPerKg = match ? parseFloat(match[1]) : 10;
-            } else {
-                const match = ind.dosing.match(/(\d+\.?\d*)\s*mg\/kg/);
-                mgPerKg = match ? parseFloat(match[1]) : 15;
-            }
-            
-            // Calculate dose in mg
-            const doseMg = mgPerKg * calculation.weight;
-            
-            // Calculate volume or tablets
-            let adminText = '';
-            let tabletOptionsHtml = '';
-            
-            if (calculation.formulation === 'suspension') {
-                let mgPerMl;
+            // Calculate all available options
+            const allOptions = calculation.concentration.divisibleParts.map(part => {
+                const actualMg = part * strength;
+                const actualMgPerKg = actualMg / calculation.weight;
+                const deviation = ((actualMg - doseMg) / doseMg * 100);
                 
-                if (calculation.concentration.custom) {
-                    mgPerMl = calculation.concentration.mg / calculation.concentration.ml;
-                } else {
-                    const parts = calculation.concentration.concentration.match(/(\d+\.?\d*)mg\/(\d+\.?\d*)ml/);
-                    mgPerMl = parseFloat(parts[1]) / parseFloat(parts[2]);
-                }
-                
-                const volumeMl = doseMg / mgPerMl;
-                adminText = `${volumeMl.toFixed(1)} ml (suspension ${calculation.concentration.concentration}) ${ind.frequency}, ${ind.duration}`;
-                
-            } else {
-                // Tablets with divisible parts
-                const strength = parseFloat(calculation.concentration.strength.match(/(\d+)/)[1]);
-                const exactTablets = doseMg / strength;
-                
-                if (calculation.concentration.divisible && calculation.concentration.divisibleParts) {
-                    // Show calculated dose first
-                    adminText = `Calculated: ${exactTablets.toFixed(2)} tablet(s) = ${doseMg.toFixed(1)} mg`;
-                    
-                    // Calculate all available options
-                    tabletOptionsHtml = '<div style="margin-top: 15px; padding: 15px; background: #f8f9ff; border-radius: 8px;">';
-                    tabletOptionsHtml += '<strong>💊 Available tablet options:</strong><br><br>';
-                    
-                    calculation.concentration.divisibleParts.forEach(part => {
-                        const actualMg = part * strength;
-                        const actualMgPerKg = actualMg / calculation.weight;
-                        const deviation = ((actualMg - doseMg) / doseMg * 100);
-                        
-                        let icon = '';
-                        let color = '';
-                        let note = '';
-                        
-                        if (Math.abs(deviation) < 5) {
-                            icon = '✅';
-                            color = 'color: #4caf50; font-weight: 600;';
-                            note = 'ACCEPTABLE';
-                        } else if (Math.abs(deviation) < 15) {
-                            icon = '⚠️';
-                            color = 'color: #ff9800; font-weight: 600;';
-                            note = deviation > 0 ? 'dose slightly higher' : 'dose slightly lower';
-                        } else {
-                            icon = '🔴';
-                            color = 'color: #f44336; font-weight: 600;';
-                            note = deviation > 0 ? 'DOSE TOO HIGH' : 'DOSE TOO LOW';
-                        }
-                        
-                        tabletOptionsHtml += `<div style="margin-bottom: 10px; padding: 10px; background: white; border-radius: 5px; border-left: 4px solid ${Math.abs(deviation) < 5 ? '#4caf50' : Math.abs(deviation) < 15 ? '#ff9800' : '#f44336'}">`;
-                        tabletOptionsHtml += `${icon} <strong>${part} tablet(s)</strong> = ${actualMg.toFixed(1)} mg (${actualMgPerKg.toFixed(1)} mg/kg)<br>`;
-                        tabletOptionsHtml += `<span style="${color}">Deviation: ${deviation > 0 ? '+' : ''}${deviation.toFixed(1)}% - ${note}</span>`;
-                        tabletOptionsHtml += `</div>`;
-                    });
-                    
-                    // Add recommendation if all options are > 15% deviation
-                    const allBad = calculation.concentration.divisibleParts.every(part => {
-                        const actualMg = part * strength;
-                        const dev = Math.abs((actualMg - doseMg) / doseMg * 100);
-                        return dev >= 15;
-                    });
-                    
-                    if (allBad) {
-                        tabletOptionsHtml += '<div style="margin-top: 10px; padding: 10px; background: #ffebee; border-radius: 5px;">';
-                        tabletOptionsHtml += '🔴 <strong>Recommendation:</strong> Consider alternative formulation (suspension) or consult senior clinician';
-                        tabletOptionsHtml += '</div>';
-                    }
-                    
-                    tabletOptionsHtml += '</div>';
-                } else {
-                    // Non-divisible tablet
-                    const tablets = doseMg / strength;
-                    adminText = `${tablets.toFixed(2)} tablet(s) of ${calculation.concentration.strength} ${ind.frequency}, ${ind.duration}`;
-                    
-                    if (!calculation.concentration.divisible && tablets % 1 !== 0) {
-                        adminText += ' ⚠️ Note: This tablet should not be split - consider alternative formulation';
-                    }
-                }
-            }
-            
-            // Display results
-            displayResults({
-                patient: `Weight: ${calculation.weight} kg${calculation.ageGroup ? ', ' + formatAge(calculation.ageGroup) : ''}`,
-                drug: drugData.drugName,
-                indication: ind.condition,
-                dose: `${mgPerKg} mg/kg ${ind.duration}`,
-                singleDose: `${doseMg.toFixed(1)} mg`,
-                admin: adminText,
-                tabletOptions: tabletOptionsHtml,
-                source: ind.source,
-                verified: selectedDrug.verified,
-                notes: drugData.importantNotes || []
+                return { part, actualMg, actualMgPerKg, deviation };
             });
             
-            goToStep(6);
+            // Find best option LOWER than calculated dose
+            const lowerOptions = allOptions.filter(opt => opt.deviation < 0);
+            const bestLower = lowerOptions.length > 0 
+                ? lowerOptions.reduce((best, current) => 
+                    (current.deviation > best.deviation) ? current : best)
+                : null;
+            
+            // Find best option HIGHER than calculated dose
+            const higherOptions = allOptions.filter(opt => opt.deviation > 0);
+            const bestHigher = higherOptions.length > 0 
+                ? higherOptions.reduce((best, current) => 
+                    (current.deviation < best.deviation) ? current : best)
+                : null;
+            
+            tabletOptionsHtml = '<div style="margin-top: 15px; padding: 15px; background: #f8f9ff; border-radius: 8px;">';
+            tabletOptionsHtml += '<strong>💊 Available tablet options:</strong><br><br>';
+            
+            // Function to render one option
+            function renderOption(option, isLower) {
+                const deviation = option.deviation;
+                
+                let icon = '';
+                let color = '';
+                let note = '';
+                
+                if (Math.abs(deviation) < 5) {
+                    icon = '✅';
+                    color = 'color: #4caf50; font-weight: 600;';
+                    note = 'ACCEPTABLE';
+                } else if (Math.abs(deviation) < 15) {
+                    icon = '⚠️';
+                    color = 'color: #ff9800; font-weight: 600;';
+                    note = isLower ? 'slightly lower' : 'slightly higher';
+                } else {
+                    icon = '🔴';
+                    color = 'color: #f44336; font-weight: 600;';
+                    note = isLower ? 'DOSE TOO LOW' : 'DOSE TOO HIGH';
+                }
+                
+                let html = `<div style="margin-bottom: 10px; padding: 10px; background: white; border-radius: 5px; border-left: 4px solid ${Math.abs(deviation) < 5 ? '#4caf50' : Math.abs(deviation) < 15 ? '#ff9800' : '#f44336'}">`;
+                html += `${icon} <strong>${option.part} tablet(s)</strong> = ${option.actualMg.toFixed(1)} mg (${option.actualMgPerKg.toFixed(1)} mg/kg)<br>`;
+                html += `<span style="${color}">Deviation: ${deviation > 0 ? '+' : ''}${deviation.toFixed(1)}% - ${note}</span>`;
+                html += `</div>`;
+                return html;
+            }
+            
+            // Show LOWER option (if exists)
+            if (bestLower) {
+                tabletOptionsHtml += '<div style="margin-bottom: 5px; font-size: 14px; color: #666;">Lower dose option:</div>';
+                tabletOptionsHtml += renderOption(bestLower, true);
+            } else {
+                tabletOptionsHtml += '<div style="margin-bottom: 10px; padding: 10px; background: #fff3e0; border-radius: 5px;">';
+                tabletOptionsHtml += '⚠️ <strong>No lower dose tablet option available</strong><br>';
+                tabletOptionsHtml += 'Consider oral suspension or compounded formulation';
+                tabletOptionsHtml += '</div>';
+            }
+            
+            // Show HIGHER option (if exists)
+            if (bestHigher) {
+                tabletOptionsHtml += '<div style="margin-bottom: 5px; font-size: 14px; color: #666;">Higher dose option:</div>';
+                tabletOptionsHtml += renderOption(bestHigher, false);
+            } else {
+                tabletOptionsHtml += '<div style="margin-bottom: 10px; padding: 10px; background: #fff3e0; border-radius: 5px;">';
+                tabletOptionsHtml += '⚠️ <strong>Maximum tablet dose reached</strong><br>';
+                tabletOptionsHtml += 'Consider: 1) Oral suspension, 2) Higher strength tablets (if available), 3) Consult senior clinician';
+                tabletOptionsHtml += '</div>';
+            }
+            
+            // Check if any option is within 15%
+            const hasAcceptableOption = allOptions.some(opt => Math.abs(opt.deviation) < 15);
+            
+            if (!hasAcceptableOption && (bestLower || bestHigher)) {
+                tabletOptionsHtml += '<div style="margin-top: 10px; padding: 10px; background: #ffebee; border-radius: 5px;">';
+                tabletOptionsHtml += '🔴 <strong>Recommendation:</strong> Consider alternative formulation (suspension) or consult senior clinician';
+                tabletOptionsHtml += '</div>';
+            }
+            
+            tabletOptionsHtml += '</div>';
+        } else {
+            // Non-divisible tablet
+            const tablets = doseMg / strength;
+            adminText = `${tablets.toFixed(2)} tablet(s) of ${calculation.concentration.strength} ${ind.frequency}, ${ind.duration}`;
+            
+            if (!calculation.concentration.divisible && tablets % 1 !== 0) {
+                adminText += ' ⚠️ Note: This tablet should not be split - consider alternative formulation';
+            }
         }
+    }
+    
+    // Display results
+    displayResults({
+        patient: `Weight: ${calculation.weight} kg${calculation.ageGroup ? ', ' + formatAge(calculation.ageGroup) : ''}`,
+        drug: drugData.drugName,
+        indication: ind.condition,
+        dose: `${mgPerKg} mg/kg ${ind.duration}`,
+        singleDose: `${doseMg.toFixed(1)} mg`,
+        admin: adminText,
+        tabletOptions: tabletOptionsHtml,
+        source: ind.source,
+        verified: selectedDrug.verified,
+        notes: drugData.importantNotes || []
+    });
+    
+    goToStep(6);
+}
         
         function formatAge(group) {
             const labels = {
