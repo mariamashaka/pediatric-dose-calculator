@@ -24,21 +24,24 @@ let calculationState = {
     customConcentration: null
 };
 
-// DOM Elements
-const steps = {
-    search: document.getElementById('step-search'),
-    indication: document.getElementById('step-indication'),
-    weight: document.getElementById('step-weight'),
-    formulation: document.getElementById('step-formulation'),
-    concentration: document.getElementById('step-concentration'),
-    results: document.getElementById('step-results')
-};
+// DOM Elements - will be initialized after DOM loads
+let steps = {};
 
 // ===========================
 // INITIALIZATION
 // ===========================
 
 document.addEventListener('DOMContentLoaded', async () => {
+    // Initialize DOM elements AFTER page loads
+    steps = {
+        search: document.getElementById('step-search'),
+        indication: document.getElementById('step-indication'),
+        weight: document.getElementById('step-weight'),
+        formulation: document.getElementById('step-formulation'),
+        concentration: document.getElementById('step-concentration'),
+        results: document.getElementById('step-results')
+    };
+    
     await loadDrugsList();
     initializeEventListeners();
     showStep(1);
