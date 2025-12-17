@@ -210,25 +210,27 @@
     }
   ],
   
-  "formulations": {
+"formulations": {
     "suspension": [
-      {
-        "concentration": "200mg/5ml",
-        "common": true,
-        "bottleSizes": [15, 30]
-      }
+        {
+            "concentration": "200mg/5ml",
+            "common": true,
+            "bottleSizes": [15, 30]
+        }
     ],
     "tablet": [
-      {
-        "strength": "250mg",
-        "divisible": false
-      },
-      {
-        "strength": "500mg",
-        "divisible": false
-      }
+        {
+            "strength": "250mg",
+            "divisible": false,
+            "divisibleParts": [0.5, 1]  // Можно половинку и целую
+        },
+        {
+            "strength": "500mg",
+            "divisible": false,
+            "divisibleParts": [0.5, 1]  // Можно половинку и целую
+        }
     ]
-  },
+},
   
   "importantNotes": [
     "Give 1 hour before or 2 hours after food",
