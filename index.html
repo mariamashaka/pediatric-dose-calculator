@@ -448,6 +448,7 @@
                     <div class="result-section highlight">
                         <h3>💊 Administration</h3>
                         <p id="result-admin" class="administration-text"></p>
+                        <div id="tablet-options" style="margin-top: 15px;"></div>
                     </div>
                     <div class="result-section important" id="notes-section">
                         <h3>⚠️ Important</h3>
@@ -457,6 +458,17 @@
                         <p id="result-source"></p>
                     </div>
                 </div>
+                
+                <button id="btn-more-info" class="btn-secondary" style="width: 100%; margin-bottom: 10px;">
+                    📖 More Information
+                </button>
+                
+                <div id="more-info-section" style="display: none; margin-bottom: 20px;">
+                    <div class="result-card" style="background: #fff9e6;">
+                        <div id="more-info-content"></div>
+                    </div>
+                </div>
+                
                 <div class="button-group">
                     <button id="btn-print" class="btn-secondary">🖨️ Print</button>
                     <button id="btn-new" class="btn-primary">🔄 New Calculation</button>
@@ -549,6 +561,21 @@
             // Step 6
             document.getElementById('btn-print').addEventListener('click', () => window.print());
             document.getElementById('btn-new').addEventListener('click', reset);
+            document.getElementById('btn-more-info').addEventListener('click', toggleMoreInfo);
+        }
+        
+        // Toggle More Information section
+        function toggleMoreInfo() {
+            const section = document.getElementById('more-info-section');
+            const btn = document.getElementById('btn-more-info');
+            
+            if (section.style.display === 'none') {
+                section.style.display = 'block';
+                btn.textContent = '📖 Hide Information';
+            } else {
+                section.style.display = 'none';
+                btn.textContent = '📖 More Information';
+            }
         }
         
         // Handle search input
@@ -760,27 +787,86 @@
             
             // Calculate volume or tablets
             let adminText = '';
+            let tabletOptionsHtml = '';
             
             if (calculation.formulation === 'suspension') {
                 let mgPerMl;
                 
                 if (calculation.concentration.custom) {
-                    // Custom concentration
                     mgPerMl = calculation.concentration.mg / calculation.concentration.ml;
                 } else {
-                    // Standard concentration
                     const parts = calculation.concentration.concentration.match(/(\d+\.?\d*)mg\/(\d+\.?\d*)ml/);
                     mgPerMl = parseFloat(parts[1]) / parseFloat(parts[2]);
                 }
                 
                 const volumeMl = doseMg / mgPerMl;
-                
                 adminText = `${volumeMl.toFixed(1)} ml (suspension ${calculation.concentration.concentration}) ${ind.frequency}, ${ind.duration}`;
-            } else {
-                const strength = parseFloat(calculation.concentration.strength.match(/(\d+)/)[1]);
-                const tablets = doseMg / strength;
                 
-                adminText = `${tablets.toFixed(2)} tablet(s) of ${calculation.concentration.strength} ${ind.frequency}, ${ind.duration}`;
+            } else {
+                // Tablets with divisible parts
+                const strength = parseFloat(calculation.concentration.strength.match(/(\d+)/)[1]);
+                const exactTablets = doseMg / strength;
+                
+                if (calculation.concentration.divisible && calculation.concentration.divisibleParts) {
+                    // Show calculated dose first
+                    adminText = `Calculated: ${exactTablets.toFixed(2)} tablet(s) = ${doseMg.toFixed(1)} mg`;
+                    
+                    // Calculate all available options
+                    tabletOptionsHtml = '<div style="margin-top: 15px; padding: 15px; background: #f8f9ff; border-radius: 8px;">';
+                    tabletOptionsHtml += '<strong>💊 Available tablet options:</strong><br><br>';
+                    
+                    calculation.concentration.divisibleParts.forEach(part => {
+                        const actualMg = part * strength;
+                        const actualMgPerKg = actualMg / calculation.weight;
+                        const deviation = ((actualMg - doseMg) / doseMg * 100);
+                        
+                        let icon = '';
+                        let color = '';
+                        let note = '';
+                        
+                        if (Math.abs(deviation) < 5) {
+                            icon = '✅';
+                            color = 'color: #4caf50; font-weight: 600;';
+                            note = 'ACCEPTABLE';
+                        } else if (Math.abs(deviation) < 15) {
+                            icon = '⚠️';
+                            color = 'color: #ff9800; font-weight: 600;';
+                            note = deviation > 0 ? 'dose slightly higher' : 'dose slightly lower';
+                        } else {
+                            icon = '🔴';
+                            color = 'color: #f44336; font-weight: 600;';
+                            note = deviation > 0 ? 'DOSE TOO HIGH' : 'DOSE TOO LOW';
+                        }
+                        
+                        tabletOptionsHtml += `<div style="margin-bottom: 10px; padding: 10px; background: white; border-radius: 5px; border-left: 4px solid ${Math.abs(deviation) < 5 ? '#4caf50' : Math.abs(deviation) < 15 ? '#ff9800' : '#f44336'}">`;
+                        tabletOptionsHtml += `${icon} <strong>${part} tablet(s)</strong> = ${actualMg.toFixed(1)} mg (${actualMgPerKg.toFixed(1)} mg/kg)<br>`;
+                        tabletOptionsHtml += `<span style="${color}">Deviation: ${deviation > 0 ? '+' : ''}${deviation.toFixed(1)}% - ${note}</span>`;
+                        tabletOptionsHtml += `</div>`;
+                    });
+                    
+                    // Add recommendation if all options are > 15% deviation
+                    const allBad = calculation.concentration.divisibleParts.every(part => {
+                        const actualMg = part * strength;
+                        const dev = Math.abs((actualMg - doseMg) / doseMg * 100);
+                        return dev >= 15;
+                    });
+                    
+                    if (allBad) {
+                        tabletOptionsHtml += '<div style="margin-top: 10px; padding: 10px; background: #ffebee; border-radius: 5px;">';
+                        tabletOptionsHtml += '🔴 <strong>Recommendation:</strong> Consider alternative formulation (suspension) or consult senior clinician';
+                        tabletOptionsHtml += '</div>';
+                    }
+                    
+                    tabletOptionsHtml += '</div>';
+                } else {
+                    // Non-divisible tablet
+                    const tablets = doseMg / strength;
+                    adminText = `${tablets.toFixed(2)} tablet(s) of ${calculation.concentration.strength} ${ind.frequency}, ${ind.duration}`;
+                    
+                    if (!calculation.concentration.divisible && tablets % 1 !== 0) {
+                        adminText += ' ⚠️ Note: This tablet should not be split - consider alternative formulation';
+                    }
+                }
             }
             
             // Display results
@@ -791,6 +877,7 @@
                 dose: `${mgPerKg} mg/kg ${ind.duration}`,
                 singleDose: `${doseMg.toFixed(1)} mg`,
                 admin: adminText,
+                tabletOptions: tabletOptionsHtml,
                 source: ind.source,
                 verified: selectedDrug.verified,
                 notes: drugData.importantNotes || []
@@ -822,6 +909,16 @@
             
             document.getElementById('result-admin').textContent = data.admin;
             
+            // Show tablet options if available
+            const tabletOptionsDiv = document.getElementById('tablet-options');
+            if (data.tabletOptions) {
+                tabletOptionsDiv.innerHTML = data.tabletOptions;
+                tabletOptionsDiv.style.display = 'block';
+            } else {
+                tabletOptionsDiv.style.display = 'none';
+            }
+            
+            // Important notes
             const notesSection = document.getElementById('notes-section');
             const notesList = document.getElementById('notes-list');
             
@@ -837,6 +934,59 @@
                 : '<span class="badge draft">🟡 DRAFT</span>';
             
             document.getElementById('result-source').innerHTML = `${badge}[${data.source}]`;
+            
+            // Populate More Information section
+            populateMoreInfo();
+        }
+        
+        // Populate More Information content
+        function populateMoreInfo() {
+            const content = document.getElementById('more-info-content');
+            
+            if (drugData.moreInformation && drugData.moreInformation.overdoseWarning) {
+                const od = drugData.moreInformation.overdoseWarning;
+                
+                let html = `<h3 style="color: #ff9800; margin-bottom: 15px;">${od.title}</h3>`;
+                html += `<p style="margin-bottom: 15px;"><strong>${od.definition}</strong></p>`;
+                
+                od.management.forEach(item => {
+                    if (item.timing) {
+                        html += `<h4 style="color: #667eea; margin-top: 20px; margin-bottom: 10px;">${item.timing}:</h4>`;
+                        html += '<ul style="margin-left: 20px; margin-bottom: 15px;">';
+                        item.actions.forEach(action => {
+                            html += `<li>${action}</li>`;
+                        });
+                        html += '</ul>';
+                    }
+                    
+                    if (item.antidote) {
+                        html += `<h4 style="color: #667eea; margin-top: 20px; margin-bottom: 10px;">${item.antidote}:</h4>`;
+                        html += '<ul style="margin-left: 20px;">';
+                        item.dosing.forEach(dose => {
+                            html += `<li>${dose}</li>`;
+                        });
+                        html += '</ul>';
+                        
+                        if (item.administration) {
+                            html += `<p style="margin-top: 10px;"><strong>Administration:</strong> ${item.administration}</p>`;
+                        }
+                        
+                        if (item.notes) {
+                            html += '<p style="margin-top: 10px;"><strong>Notes:</strong></p><ul style="margin-left: 20px;">';
+                            item.notes.forEach(note => {
+                                html += `<li>${note}</li>`;
+                            });
+                            html += '</ul>';
+                        }
+                        
+                        html += `<p style="margin-top: 10px; font-size: 12px; color: #667eea;"><em>Source: ${item.source}</em></p>`;
+                    }
+                });
+                
+                content.innerHTML = html;
+            } else {
+                content.innerHTML = '<p>No additional information available for this medication.</p>';
+            }
         }
         
         // Reset calculator
@@ -852,6 +1002,10 @@
             document.getElementById('drug-select').value = '';
             document.getElementById('weight-input').value = '';
             document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+            
+            // Hide More Information section
+            document.getElementById('more-info-section').style.display = 'none';
+            document.getElementById('btn-more-info').textContent = '📖 More Information';
             
             goToStep(1);
         }
