@@ -4,226 +4,723 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pediatric Drug Calculator</title>
-    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        /* ===========================
+           STYLES
+           =========================== */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 10px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            font-size: 14px;
+            opacity: 0.95;
+        }
+        
+        .content {
+            padding: 25px 20px;
+        }
+        
+        .step {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .step.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .step h2 {
+            color: #667eea;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        select, input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        select:focus, input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .radio-group {
+            margin-bottom: 20px;
+        }
+        
+        .radio-group label {
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            display: block;
+        }
+        
+        .radio-group input[type="radio"] {
+            margin-right: 10px;
+        }
+        
+        .radio-group label:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+        
+        .radio-group input[type="radio"]:checked + span {
+            font-weight: 600;
+        }
+        
+        .indication-text {
+            display: block;
+            font-size: 15px;
+            color: #333;
+            margin-bottom: 3px;
+        }
+        
+        .source-text {
+            font-size: 12px;
+            color: #667eea;
+            font-style: italic;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #555;
+        }
+        
+        .btn-secondary:hover:not(:disabled) {
+            background: #e0e0e0;
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            font-size: 18px;
+        }
+        
+        .result-card {
+            background: #f8f9ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .result-section {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .result-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .result-section h3 {
+            color: #667eea;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #fff5e6 0%, #ffe6f0 100%);
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #667eea;
+        }
+        
+        .administration-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #000;
+        }
+        
+        .important {
+            background: #fff9e6;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ff9800;
+        }
+        
+        .important ul {
+            margin-left: 20px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-right: 8px;
+        }
+        
+        .verified {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .draft {
+            background: #ffc107;
+            color: #333;
+        }
+        
+        footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+            font-size: 14px;
+        }
+        
+        .developer {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .copyright {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+        
+        .notice {
+            color: #ff9800;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .contact {
+            color: #555;
+            font-size: 13px;
+        }
+        
+        .contact a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 480px) {
+            .button-group {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
         <header>
             <h1>PEDIATRIC DRUG CALCULATOR</h1>
             <p class="subtitle">Evidence-based dosing for pediatric patients</p>
         </header>
 
-        <!-- Main Content -->
         <main class="content">
             
-            <!-- Step 1: Drug Search -->
-            <section id="step-search" class="step active">
-                <h2>🔍 Search Drug</h2>
-                <div class="search-wrapper">
-                    <input 
-                        type="text" 
-                        id="drug-search" 
-                        class="search-input" 
-                        placeholder="Type drug name..."
-                        autocomplete="off"
-                    >
-                    <div id="autocomplete-results" class="autocomplete-dropdown hidden"></div>
-                </div>
-                <div class="or-divider">OR</div>
-                <label for="drug-select">Select from list:</label>
-                <select id="drug-select" class="drug-dropdown">
+            <!-- Step 1: Drug Selection -->
+            <section id="step-1" class="step active">
+                <h2>Select Drug</h2>
+                <label for="drug-select">Choose medication:</label>
+                <select id="drug-select">
                     <option value="">-- Select a drug --</option>
                 </select>
                 <div class="button-group">
-                    <button id="btn-next-1" class="btn btn-primary" disabled>Next →</button>
+                    <button id="btn-next-1" class="btn-primary" disabled>Next →</button>
                 </div>
             </section>
 
-            <!-- Step 2: Clinical Information (Indications) -->
-            <section id="step-indication" class="step hidden">
-                <h2>📖 <span id="drug-name-display"></span> - Dosing by Indication</h2>
-                <p class="instruction">Choose the condition you are treating:</p>
-                
-                <div id="indications-list" class="options-list">
-                    <!-- Will be populated dynamically -->
-                </div>
-
-                <div class="custom-dose-wrapper">
-                    <label>
-                        <input type="radio" name="indication" value="custom" id="custom-dose-radio">
-                        Custom dose:
-                    </label>
-                    <input 
-                        type="number" 
-                        id="custom-dose-input" 
-                        class="input-small" 
-                        placeholder="0"
-                        step="0.1"
-                        min="0"
-                        disabled
-                    > mg/kg
-                </div>
-
+            <!-- Step 2: Indication -->
+            <section id="step-2" class="step">
+                <h2 id="drug-name-title"></h2>
+                <label>Select indication:</label>
+                <div id="indications-container" class="radio-group"></div>
                 <div class="button-group">
-                    <button id="btn-back-2" class="btn btn-secondary">← Back</button>
-                    <button id="btn-next-2" class="btn btn-primary" disabled>Next →</button>
+                    <button id="btn-back-2" class="btn-secondary">← Back</button>
+                    <button id="btn-next-2" class="btn-primary" disabled>Next →</button>
                 </div>
             </section>
 
             <!-- Step 3: Patient Weight -->
-            <section id="step-weight" class="step hidden">
-                <h2>⚖️ Patient Weight</h2>
+            <section id="step-3" class="step">
+                <h2>Patient Weight</h2>
+                <label for="weight-input">Enter weight (kg):</label>
+                <input type="number" id="weight-input" min="0.5" max="150" step="0.1" placeholder="e.g., 10.5">
                 
-                <label for="patient-weight">Enter patient weight:</label>
-                <div class="input-with-unit">
-                    <input 
-                        type="number" 
-                        id="patient-weight" 
-                        class="input-medium" 
-                        placeholder="0"
-                        step="0.1"
-                        min="0.5"
-                        max="150"
-                    >
-                    <span class="unit">kg</span>
-                </div>
-
-                <label class="optional-label">Age group (optional):</label>
-                <div class="age-group-options">
+                <label>Age group (optional):</label>
+                <div class="radio-group">
                     <label>
                         <input type="radio" name="age-group" value="neonate">
-                        Neonate (0-28 days)
+                        <span>Neonate (0-28 days)</span>
                     </label>
                     <label>
                         <input type="radio" name="age-group" value="infant">
-                        Infant (1-12 months)
+                        <span>Infant (1-12 months)</span>
                     </label>
                     <label>
                         <input type="radio" name="age-group" value="child">
-                        Child (1-12 years)
+                        <span>Child (1-12 years)</span>
                     </label>
                     <label>
                         <input type="radio" name="age-group" value="adolescent">
-                        Adolescent (13-18 years)
+                        <span>Adolescent (13-18 years)</span>
                     </label>
                 </div>
-
                 <div class="button-group">
-                    <button id="btn-back-3" class="btn btn-secondary">← Back</button>
-                    <button id="btn-next-3" class="btn btn-primary" disabled>Next →</button>
+                    <button id="btn-back-3" class="btn-secondary">← Back</button>
+                    <button id="btn-next-3" class="btn-primary" disabled>Next →</button>
                 </div>
             </section>
 
-            <!-- Step 4: Formulation Type -->
-            <section id="step-formulation" class="step hidden">
-                <h2>💊 Select Formulation</h2>
-                <p class="instruction">What formulation will you use?</p>
-                
-                <div id="formulation-options" class="options-list">
-                    <!-- Will be populated dynamically -->
-                </div>
-
+            <!-- Step 4: Formulation -->
+            <section id="step-4" class="step">
+                <h2>Select Formulation</h2>
+                <label>Choose form:</label>
+                <div id="formulation-container" class="radio-group"></div>
                 <div class="button-group">
-                    <button id="btn-back-4" class="btn btn-secondary">← Back</button>
-                    <button id="btn-next-4" class="btn btn-primary" disabled>Next →</button>
+                    <button id="btn-back-4" class="btn-secondary">← Back</button>
+                    <button id="btn-next-4" class="btn-primary" disabled>Next →</button>
                 </div>
             </section>
 
             <!-- Step 5: Concentration -->
-            <section id="step-concentration" class="step hidden">
-                <h2>🧪 Select Concentration</h2>
-                <p class="instruction">Choose the available concentration:</p>
-                
-                <div id="concentration-options" class="options-list">
-                    <!-- Will be populated dynamically -->
-                </div>
-
-                <div class="custom-concentration-wrapper hidden" id="custom-concentration-section">
-                    <label>Custom concentration:</label>
-                    <div class="concentration-inputs">
-                        <input 
-                            type="number" 
-                            id="custom-conc-mg" 
-                            class="input-small" 
-                            placeholder="0"
-                            step="1"
-                            min="0"
-                            disabled
-                        > mg in
-                        <input 
-                            type="number" 
-                            id="custom-conc-ml" 
-                            class="input-small" 
-                            placeholder="0"
-                            step="0.1"
-                            min="0"
-                            disabled
-                        > ml
-                    </div>
-                </div>
-
+            <section id="step-5" class="step">
+                <h2>Select Concentration</h2>
+                <label>Choose available strength:</label>
+                <div id="concentration-container" class="radio-group"></div>
                 <div class="button-group">
-                    <button id="btn-back-5" class="btn btn-secondary">← Back</button>
-                    <button id="btn-calculate" class="btn btn-success" disabled>Calculate 🧮</button>
+                    <button id="btn-back-5" class="btn-secondary">← Back</button>
+                    <button id="btn-calculate" class="btn-success" disabled>Calculate 🧮</button>
                 </div>
             </section>
 
             <!-- Step 6: Results -->
-            <section id="step-results" class="step hidden">
-                <h2>📊 RESULT</h2>
-                
+            <section id="step-6" class="step">
+                <h2>📊 Result</h2>
                 <div class="result-card">
                     <div class="result-section">
                         <h3>Patient Information</h3>
-                        <p id="result-patient-info"></p>
+                        <p id="result-patient"></p>
                     </div>
-
                     <div class="result-section">
                         <h3>Prescribed Dose</h3>
-                        <p id="result-dose-info"></p>
+                        <div id="result-dose"></div>
                     </div>
-
                     <div class="result-section highlight">
                         <h3>💊 Administration</h3>
-                        <p id="result-administration" class="administration-text"></p>
+                        <p id="result-admin" class="administration-text"></p>
                     </div>
-
-                    <div class="result-section important" id="important-notes-section">
+                    <div class="result-section important" id="notes-section">
                         <h3>⚠️ Important</h3>
-                        <ul id="important-notes-list"></ul>
+                        <ul id="notes-list"></ul>
                     </div>
-
-                    <div class="result-section source">
+                    <div class="result-section">
                         <p id="result-source"></p>
                     </div>
                 </div>
-
                 <div class="button-group">
-                    <button id="btn-print" class="btn btn-secondary">🖨️ Print</button>
-                    <button id="btn-new-calc" class="btn btn-primary">🔄 New Calculation</button>
-                    <button id="btn-back-6" class="btn btn-secondary">← Back</button>
+                    <button id="btn-print" class="btn-secondary">🖨️ Print</button>
+                    <button id="btn-new" class="btn-primary">🔄 New Calculation</button>
                 </div>
             </section>
 
         </main>
 
-        <!-- Footer -->
         <footer>
             <p class="developer">Developed by Dr. Mariia Rukavishnikova</p>
             <p class="copyright">© 2026 Drug Dosage Calculator</p>
-            <div class="development-notice">
-                <p class="notice-text">⚠️ Calculator is under active development</p>
-                <p class="contact-text">Questions or suggestions? WhatsApp: <a href="https://wa.me/255756977282">+255 756 977 282</a></p>
-            </div>
+            <p class="notice">⚠️ Calculator is under active development</p>
+            <p class="contact">Questions or suggestions? WhatsApp: <a href="https://wa.me/255756977282">+255 756 977 282</a></p>
         </footer>
     </div>
 
-    <!-- Print Template (Hidden) -->
-    <div id="print-template" class="print-only">
-        <!-- Will be populated when printing -->
-    </div>
-
-    <script src="app.js"></script>
+    <script>
+        // ===========================
+        // JAVASCRIPT
+        // ===========================
+        
+        let currentStep = 1;
+        let drugsList = [];
+        let selectedDrug = null;
+        let drugData = null;
+        let calculation = {
+            indication: null,
+            weight: null,
+            ageGroup: null,
+            formulation: null,
+            concentration: null
+        };
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', init);
+        
+        async function init() {
+            await loadDrugs();
+            setupEventListeners();
+        }
+        
+        // Load drugs list
+        async function loadDrugs() {
+            try {
+                const response = await fetch('data/drugs-list.json');
+                drugsList = await response.json();
+                populateDrugDropdown();
+            } catch (error) {
+                console.error('Error loading drugs:', error);
+                alert('Error loading drug database. Please check data folder.');
+            }
+        }
+        
+        function populateDrugDropdown() {
+            const select = document.getElementById('drug-select');
+            drugsList.forEach(drug => {
+                const option = document.createElement('option');
+                option.value = drug.id;
+                option.textContent = `${drug.name} ${drug.verified ? '🟢' : '🟡'}`;
+                select.appendChild(option);
+            });
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // Step 1
+            document.getElementById('drug-select').addEventListener('change', handleDrugSelect);
+            document.getElementById('btn-next-1').addEventListener('click', () => goToStep(2));
+            
+            // Step 2
+            document.getElementById('btn-back-2').addEventListener('click', () => goToStep(1));
+            document.getElementById('btn-next-2').addEventListener('click', () => goToStep(3));
+            
+            // Step 3
+            document.getElementById('weight-input').addEventListener('input', validateWeight);
+            document.getElementById('btn-back-3').addEventListener('click', () => goToStep(2));
+            document.getElementById('btn-next-3').addEventListener('click', () => goToStep(4));
+            
+            // Step 4
+            document.getElementById('btn-back-4').addEventListener('click', () => goToStep(3));
+            document.getElementById('btn-next-4').addEventListener('click', () => goToStep(5));
+            
+            // Step 5
+            document.getElementById('btn-back-5').addEventListener('click', () => goToStep(4));
+            document.getElementById('btn-calculate').addEventListener('click', calculate);
+            
+            // Step 6
+            document.getElementById('btn-print').addEventListener('click', () => window.print());
+            document.getElementById('btn-new').addEventListener('click', reset);
+        }
+        
+        // Handle drug selection
+        async function handleDrugSelect(e) {
+            const drugId = e.target.value;
+            if (!drugId) {
+                document.getElementById('btn-next-1').disabled = true;
+                return;
+            }
+            
+            selectedDrug = drugsList.find(d => d.id === drugId);
+            
+            try {
+                const response = await fetch(`data/${drugId}.json`);
+                drugData = await response.json();
+                document.getElementById('btn-next-1').disabled = false;
+            } catch (error) {
+                console.error('Error loading drug data:', error);
+                alert('Error loading drug information.');
+            }
+        }
+        
+        // Navigate between steps
+        function goToStep(step) {
+            // Hide all
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            
+            // Show target
+            document.getElementById(`step-${step}`).classList.add('active');
+            currentStep = step;
+            
+            // Populate data based on step
+            if (step === 2) populateIndications();
+            if (step === 4) populateFormulations();
+            if (step === 5) populateConcentrations();
+            
+            window.scrollTo(0, 0);
+        }
+        
+        // Populate indications
+        function populateIndications() {
+            document.getElementById('drug-name-title').textContent = drugData.drugName;
+            const container = document.getElementById('indications-container');
+            
+            container.innerHTML = drugData.indications.map((ind, i) => `
+                <label>
+                    <input type="radio" name="indication" value="${i}">
+                    <span class="indication-text">${ind.condition}: ${ind.dosing}</span>
+                    <span class="source-text">[${ind.source}]</span>
+                </label>
+            `).join('');
+            
+            container.querySelectorAll('input').forEach(input => {
+                input.addEventListener('change', () => {
+                    calculation.indication = drugData.indications[input.value];
+                    document.getElementById('btn-next-2').disabled = false;
+                });
+            });
+        }
+        
+        // Validate weight
+        function validateWeight() {
+            const weight = parseFloat(document.getElementById('weight-input').value);
+            const valid = weight >= 0.5 && weight <= 150;
+            
+            if (valid) {
+                calculation.weight = weight;
+                const ageRadio = document.querySelector('input[name="age-group"]:checked');
+                calculation.ageGroup = ageRadio ? ageRadio.value : null;
+            }
+            
+            document.getElementById('btn-next-3').disabled = !valid;
+        }
+        
+        // Populate formulations
+        function populateFormulations() {
+            const container = document.getElementById('formulation-container');
+            const forms = drugData.formulations;
+            
+            let html = '';
+            if (forms.suspension?.length) {
+                html += `<label><input type="radio" name="formulation" value="suspension"><span>Oral Suspension / Syrup</span></label>`;
+            }
+            if (forms.tablet?.length) {
+                html += `<label><input type="radio" name="formulation" value="tablet"><span>Tablets</span></label>`;
+            }
+            
+            container.innerHTML = html;
+            
+            container.querySelectorAll('input').forEach(input => {
+                input.addEventListener('change', () => {
+                    calculation.formulation = input.value;
+                    document.getElementById('btn-next-4').disabled = false;
+                });
+            });
+        }
+        
+        // Populate concentrations
+        function populateConcentrations() {
+            const container = document.getElementById('concentration-container');
+            const items = drugData.formulations[calculation.formulation];
+            
+            container.innerHTML = items.map((item, i) => {
+                const label = calculation.formulation === 'suspension' 
+                    ? `${item.concentration} ${item.common ? '(standard)' : ''}`
+                    : `${item.strength} ${item.divisible ? '(divisible)' : '(do not split)'}`;
+                
+                return `<label><input type="radio" name="concentration" value="${i}"><span>${label}</span></label>`;
+            }).join('');
+            
+            container.querySelectorAll('input').forEach(input => {
+                input.addEventListener('change', () => {
+                    calculation.concentration = items[input.value];
+                    document.getElementById('btn-calculate').disabled = false;
+                });
+            });
+        }
+        
+        // Calculate dose
+        function calculate() {
+            const ind = calculation.indication;
+            
+            // Get mg/kg dose
+            let mgPerKg = 15; // default
+            
+            // Check for neonatal special dosing
+            if (calculation.ageGroup === 'neonate' && 
+                drugData.ageRestrictions?.neonate?.specialDosing) {
+                const match = drugData.ageRestrictions.neonate.dose.match(/(\d+\.?\d*)/);
+                mgPerKg = match ? parseFloat(match[1]) : 10;
+            } else {
+                const match = ind.dosing.match(/(\d+\.?\d*)\s*mg\/kg/);
+                mgPerKg = match ? parseFloat(match[1]) : 15;
+            }
+            
+            // Calculate dose in mg
+            const doseMg = mgPerKg * calculation.weight;
+            
+            // Calculate volume or tablets
+            let adminText = '';
+            
+            if (calculation.formulation === 'suspension') {
+                const parts = calculation.concentration.concentration.match(/(\d+\.?\d*)mg\/(\d+\.?\d*)ml/);
+                const mgPerMl = parseFloat(parts[1]) / parseFloat(parts[2]);
+                const volumeMl = doseMg / mgPerMl;
+                
+                adminText = `${volumeMl.toFixed(1)} ml (suspension ${calculation.concentration.concentration}) ${ind.frequency}, ${ind.duration}`;
+            } else {
+                const strength = parseFloat(calculation.concentration.strength.match(/(\d+)/)[1]);
+                const tablets = doseMg / strength;
+                
+                adminText = `${tablets.toFixed(2)} tablet(s) of ${calculation.concentration.strength} ${ind.frequency}, ${ind.duration}`;
+            }
+            
+            // Display results
+            displayResults({
+                patient: `Weight: ${calculation.weight} kg${calculation.ageGroup ? ', ' + formatAge(calculation.ageGroup) : ''}`,
+                drug: drugData.drugName,
+                indication: ind.condition,
+                dose: `${mgPerKg} mg/kg ${ind.duration}`,
+                singleDose: `${doseMg.toFixed(1)} mg`,
+                admin: adminText,
+                source: ind.source,
+                verified: selectedDrug.verified,
+                notes: drugData.importantNotes || []
+            });
+            
+            goToStep(6);
+        }
+        
+        function formatAge(group) {
+            const labels = {
+                neonate: 'Neonate (0-28 days)',
+                infant: 'Infant (1-12 months)',
+                child: 'Child (1-12 years)',
+                adolescent: 'Adolescent (13-18 years)'
+            };
+            return labels[group] || '';
+        }
+        
+        // Display results
+        function displayResults(data) {
+            document.getElementById('result-patient').textContent = data.patient;
+            
+            document.getElementById('result-dose').innerHTML = `
+                <strong>Drug:</strong> ${data.drug}<br>
+                <strong>Indication:</strong> ${data.indication}<br>
+                <strong>Dose:</strong> ${data.dose}<br>
+                <strong>Single Dose:</strong> ${data.singleDose}
+            `;
+            
+            document.getElementById('result-admin').textContent = data.admin;
+            
+            const notesSection = document.getElementById('notes-section');
+            const notesList = document.getElementById('notes-list');
+            
+            if (data.notes.length > 0) {
+                notesSection.style.display = 'block';
+                notesList.innerHTML = data.notes.map(n => `<li>${n}</li>`).join('');
+            } else {
+                notesSection.style.display = 'none';
+            }
+            
+            const badge = data.verified 
+                ? '<span class="badge verified">🟢 VERIFIED</span>'
+                : '<span class="badge draft">🟡 DRAFT</span>';
+            
+            document.getElementById('result-source').innerHTML = `${badge}[${data.source}]`;
+        }
+        
+        // Reset calculator
+        function reset() {
+            calculation = {
+                indication: null,
+                weight: null,
+                ageGroup: null,
+                formulation: null,
+                concentration: null
+            };
+            
+            document.getElementById('drug-select').value = '';
+            document.getElementById('weight-input').value = '';
+            document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+            
+            goToStep(1);
+        }
+    </script>
 </body>
 </html>
