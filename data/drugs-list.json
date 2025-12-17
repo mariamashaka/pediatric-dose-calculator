@@ -8,5 +8,10 @@
     "id": "azithromycin",
     "name": "Azithromycin",
     "verified": true
+  },
+  {
+    "id": "erythromycin",
+    "name": "Erythromycin",
+    "verified": true
   }
 ]
