@@ -84,6 +84,129 @@
           "warning": "⚠️ CRITICAL: Double the Tanzania dose"
         }
       ]
+    },
+    {
+      "condition": "Cholera",
+      "regimens": [
+        {
+          "name": "WHO/PAHO recommendation",
+          "dosing": "20 mg/kg single dose",
+          "frequency": "single dose",
+          "duration": "1 day",
+          "maxDose": "1 g",
+          "source": "WHO 2010, PAHO"
+        },
+        {
+          "name": "Tanzania guideline",
+          "dosing": "250 mg once daily",
+          "frequency": "once daily",
+          "duration": "7 days",
+          "source": "STG and NEML Tanzania 2021",
+          "notes": "Fixed dose regardless of weight"
+        }
+      ]
+    },
+    {
+      "condition": "Acute chest syndrome (Sickle Cell)",
+      "regimens": [
+        {
+          "name": "Standard course",
+          "dosing": "10 mg/kg once daily",
+          "frequency": "once daily",
+          "duration": "5 days",
+          "source": "STG Children & Adolescents, Tanzania 2017",
+          "notes": "Age: >5 years. Add to IV antibiotics for severe pneumonia"
+        }
+      ]
+    },
+    {
+      "condition": "Gonorrhea/Chlamydia (STI)",
+      "regimens": [
+        {
+          "name": "Adolescent dosing",
+          "dosing": "1 g single dose",
+          "frequency": "single dose",
+          "duration": "1 day",
+          "source": "STG Children & Adolescents, Tanzania 2017",
+          "notes": "For adolescents only"
+        }
+      ]
+    },
+    {
+      "condition": "Pertussis (Whooping cough)",
+      "regimens": [
+        {
+          "name": "WHO recommendation",
+          "dosing": "10 mg/kg day 1, then 5 mg/kg days 2-5",
+          "frequency": "once daily",
+          "duration": "5 days",
+          "source": "WHO Pocket Book of Hospital Care for Children 2013"
+        }
+      ]
+    },
+    {
+      "condition": "Adenoid hypertrophy",
+      "regimens": [
+        {
+          "name": "Standard course",
+          "dosing": "10 mg/kg once daily",
+          "frequency": "once daily",
+          "duration": "3 days",
+          "source": "STG Children & Adolescents, Tanzania 2017"
+        }
+      ]
+    },
+    {
+      "condition": "Sinusitis",
+      "regimens": [
+        {
+          "name": "Adult guideline",
+          "dosing": "10 mg/kg once daily",
+          "frequency": "once daily",
+          "duration": "3 days",
+          "source": "STG and NEML Tanzania 2021",
+          "notes": "From adult guidelines, apply cautiously to children"
+        }
+      ]
+    },
+    {
+      "condition": "Neonatal infections",
+      "regimens": [
+        {
+          "name": "Neonatal guideline",
+          "dosing": "10 mg/kg once daily",
+          "frequency": "once every 24 hours",
+          "duration": "5 days",
+          "source": "Guideline for Neonatal Care, Tz 2019",
+          "notes": "For specific neonatal indications only"
+        }
+      ]
+    },
+    {
+      "condition": "Trachoma (mass campaign)",
+      "regimens": [
+        {
+          "name": "Weight-based table",
+          "dosing": "See weight table",
+          "frequency": "single dose",
+          "duration": "1 day",
+          "source": "STG Children & Adolescents, Tanzania 2017",
+          "notes": "<15kg: 20mg/kg | 15-25kg: 400mg | 26-35kg: 600mg | 36-45kg: 800mg | >45kg: 1g"
+        }
+      ]
+    },
+    {
+      "condition": "Deep neck infections",
+      "regimens": [
+        {
+          "name": "Adult guideline",
+          "dosing": "500 mg once daily",
+          "frequency": "once daily",
+          "duration": "3 days",
+          "source": "STG and NEML Tanzania 2021",
+          "notes": "From adult guidelines, adjust for children if needed"
+        }
+      ]
     }
   ],
   
@@ -110,7 +233,8 @@
   "importantNotes": [
     "Give 1 hour before or 2 hours after food",
     "Maximum daily dose: 500 mg",
-    "Calculate total bottle volume needed for full course"
+    "Calculate total bottle volume needed for full course",
+    "For suspensions: check bottle size (15ml or 30ml)"
   ],
   
   "moreInformation": {
