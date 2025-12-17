@@ -7,7 +7,7 @@
     
     <style>
         /* ===========================
-           STYLES
+           STYLES (БЕЗ ИЗМЕНЕНИЙ)
            =========================== */
         
         * {
@@ -358,36 +358,29 @@
                 </div>
             </section>
 
-<!-- Step 2: Indication -->
-<section id="step-2" class="step">
-    <h2 id="drug-name-title"></h2>
-    <label>Select indication:</label>
-    <div id="indications-container" class="radio-group"></div>
-    
-    <!-- НОВЫЙ БЛОК: Выбор схемы лечения (показывается после выбора показания) -->
-    <div id="regimen-container" style="display: none; margin-top: 20px;">
-        <label>Select dosing regimen:</label>
-        <div id="regimen-options" class="radio-group"></div>
-    </div>
-    
-    <div class="button-group">
-        <button id="btn-back-2" class="btn-secondary">← Back</button>
-        <button id="btn-next-2" class="btn-primary" disabled>Next →</button>
-    </div>
-</section>
+            <!-- Step 2: Indication -->
+            <section id="step-2" class="step">
+                <h2 id="drug-name-title"></h2>
+                <label>Select indication:</label>
+                <div id="indications-container" class="radio-group"></div>
+                <div class="button-group">
+                    <button id="btn-back-2" class="btn-secondary">← Back</button>
+                    <button id="btn-next-2" class="btn-primary" disabled>Next →</button>
+                </div>
+            </section>
 
-            <!-- Step 3: Regimen Selection -->
-<section id="step-3" class="step">
-    <h2>Select Dosing Regimen</h2>
-    <div id="regimen-container" class="radio-group"></div>
-    <div class="button-group">
-        <button id="btn-back-3" class="btn-secondary">← Back</button>
-        <button id="btn-next-3" class="btn-primary" disabled>Next →</button>
-    </div>
-</section>
+            <!-- Step 3: Regimen Selection (НОВЫЙ ШАГ!) -->
+            <section id="step-3" class="step">
+                <h2>Select Dosing Regimen</h2>
+                <div id="regimen-container" class="radio-group"></div>
+                <div class="button-group">
+                    <button id="btn-back-3" class="btn-secondary">← Back</button>
+                    <button id="btn-next-3" class="btn-primary" disabled>Next →</button>
+                </div>
+            </section>
 
-<!-- Step 4: Patient Weight -->  <!-- БЫЛО Step 3 -->
-<section id="step-4" class="step">  <!-- БЫЛО step-3 -->
+            <!-- Step 4: Patient Weight (БЫЛ ШАГ 3) -->
+            <section id="step-4" class="step">
                 <h2>Patient Weight</h2>
                 <label for="weight-input">Enter weight (kg):</label>
                 <input type="number" id="weight-input" min="0.5" max="150" step="0.1" placeholder="e.g., 10.5">
@@ -412,24 +405,24 @@
                     </label>
                 </div>
                 <div class="button-group">
-                    <button id="btn-back-3" class="btn-secondary">← Back</button>
-                    <button id="btn-next-3" class="btn-primary" disabled>Next →</button>
-                </div>
-            </section>
-            
-<!-- Step 5: Formulation -->  <!-- БЫЛО Step 4 -->
-<section id="step-5" class="step">  <!-- БЫЛО step-4 -->
-                <h2>Select Formulation</h2>
-                <label>Choose form:</label>
-                <div id="formulation-container" class="radio-group"></div>
-                <div class="button-group">
                     <button id="btn-back-4" class="btn-secondary">← Back</button>
                     <button id="btn-next-4" class="btn-primary" disabled>Next →</button>
                 </div>
             </section>
 
-<!-- Step 6: Concentration -->  <!-- БЫЛО Step 5 -->
-<section id="step-6" class="step">  <!-- БЫЛО step-5 -->
+            <!-- Step 5: Formulation (БЫЛ ШАГ 4) -->
+            <section id="step-5" class="step">
+                <h2>Select Formulation</h2>
+                <label>Choose form:</label>
+                <div id="formulation-container" class="radio-group"></div>
+                <div class="button-group">
+                    <button id="btn-back-5" class="btn-secondary">← Back</button>
+                    <button id="btn-next-5" class="btn-primary" disabled>Next →</button>
+                </div>
+            </section>
+
+            <!-- Step 6: Concentration (БЫЛ ШАГ 5) -->
+            <section id="step-6" class="step">
                 <h2>Select Concentration</h2>
                 <label>Choose available strength:</label>
                 <div id="concentration-container" class="radio-group"></div>
@@ -445,13 +438,13 @@
                 </div>
                 
                 <div class="button-group">
-                    <button id="btn-back-5" class="btn-secondary">← Back</button>
+                    <button id="btn-back-6" class="btn-secondary">← Back</button>
                     <button id="btn-calculate" class="btn-success" disabled>Calculate 🧮</button>
                 </div>
             </section>
 
-<!-- Step 7: Results -->  <!-- БЫЛО Step 6 -->
-<section id="step-7" class="step">  <!-- БЫЛО step-6 -->
+            <!-- Step 7: Results (БЫЛ ШАГ 6) -->
+            <section id="step-7" class="step">
                 <h2>📊 Result</h2>
                 <div class="result-card">
                     <div class="result-section">
@@ -513,6 +506,7 @@
         let drugData = null;
         let calculation = {
             indication: null,
+            regimen: null,  // НОВОЕ ПОЛЕ!
             weight: null,
             ageGroup: null,
             formulation: null,
@@ -560,22 +554,26 @@
             document.getElementById('btn-back-2').addEventListener('click', () => goToStep(1));
             document.getElementById('btn-next-2').addEventListener('click', () => goToStep(3));
             
-            // Step 3
-            document.getElementById('weight-input').addEventListener('input', validateWeight);
+            // Step 3 (НОВЫЙ!)
             document.getElementById('btn-back-3').addEventListener('click', () => goToStep(2));
             document.getElementById('btn-next-3').addEventListener('click', () => goToStep(4));
             
-            // Step 4
+            // Step 4 (было 3)
+            document.getElementById('weight-input').addEventListener('input', validateWeight);
             document.getElementById('btn-back-4').addEventListener('click', () => goToStep(3));
             document.getElementById('btn-next-4').addEventListener('click', () => goToStep(5));
             
-            // Step 5
+            // Step 5 (было 4)
             document.getElementById('btn-back-5').addEventListener('click', () => goToStep(4));
+            document.getElementById('btn-next-5').addEventListener('click', () => goToStep(6));
+            
+            // Step 6 (было 5)
+            document.getElementById('btn-back-6').addEventListener('click', () => goToStep(5));
             document.getElementById('btn-calculate').addEventListener('click', calculate);
             document.getElementById('custom-mg').addEventListener('input', validateCustomConcentration);
             document.getElementById('custom-ml').addEventListener('input', validateCustomConcentration);
             
-            // Step 6
+            // Step 7 (было 6)
             document.getElementById('btn-print').addEventListener('click', () => window.print());
             document.getElementById('btn-new').addEventListener('click', reset);
             document.getElementById('btn-more-info').addEventListener('click', toggleMoreInfo);
@@ -665,39 +663,46 @@
             
             // Populate data based on step
             if (step === 2) populateIndications();
-            if (step === 4) populateFormulations();
-            if (step === 5) populateConcentrations();
+            if (step === 3) populateRegimens();      // НОВОЕ!
+            if (step === 5) populateFormulations();  // БЫЛО 4
+            if (step === 6) populateConcentrations(); // БЫЛО 5
             
             window.scrollTo(0, 0);
         }
         
-// Populate indications
-function populateIndications() {
-    document.getElementById('drug-name-title').textContent = drugData.drugName;
-    const container = document.getElementById('indications-container');
-    
-    // Показываем список показаний
-    container.innerHTML = drugData.indications.map((ind, i) => `
-        <label>
-            <input type="radio" name="indication" value="${i}">
-            <span class="indication-text">${ind.condition}</span>
-        </label>
-    `).join('');
-    
-    // Сбрасываем выбор схемы
-    document.getElementById('regimen-container').style.display = 'none';
-    document.getElementById('btn-next-2').disabled = true;
-    
-    container.querySelectorAll('input').forEach(input => {
-        input.addEventListener('change', () => {
-            const indication = drugData.indications[input.value];
-            const regimenContainer = document.getElementById('regimen-container');
-            const regimenOptions = document.getElementById('regimen-options');
+        // Populate indications (ШАГ 2)
+        function populateIndications() {
+            document.getElementById('drug-name-title').textContent = drugData.drugName;
+            const container = document.getElementById('indications-container');
+            
+            // Показываем только названия показаний
+            container.innerHTML = drugData.indications.map((ind, i) => `
+                <label>
+                    <input type="radio" name="indication" value="${i}">
+                    <span class="indication-text">${ind.condition}</span>
+                </label>
+            `).join('');
+            
+            // Сбрасываем кнопку Next
+            document.getElementById('btn-next-2').disabled = true;
+            
+            container.querySelectorAll('input').forEach(input => {
+                input.addEventListener('change', () => {
+                    calculation.indication = drugData.indications[input.value];
+                    document.getElementById('btn-next-2').disabled = false;
+                });
+            });
+        }
+        
+        // Populate regimens (НОВАЯ ФУНКЦИЯ для ШАГА 3)
+        function populateRegimens() {
+            const container = document.getElementById('regimen-container');
+            const indication = calculation.indication;
             
             // Проверяем, есть ли варианты схем
             if (indication.regimens && indication.regimens.length > 1) {
                 // Показываем выбор схемы
-                regimenOptions.innerHTML = indication.regimens.map((regimen, i) => `
+                container.innerHTML = indication.regimens.map((regimen, i) => `
                     <label>
                         <input type="radio" name="regimen" value="${i}">
                         <span class="indication-text">${regimen.name}: ${regimen.dosing} × ${regimen.duration}</span>
@@ -705,27 +710,22 @@ function populateIndications() {
                     </label>
                 `).join('');
                 
-                regimenContainer.style.display = 'block';
-                document.getElementById('btn-next-2').disabled = true; // Ждем выбора схемы
+                // Ждем выбора схемы
+                document.getElementById('btn-next-3').disabled = true;
                 
                 // Слушатель для выбора схемы
-                regimenOptions.querySelectorAll('input').forEach(regInput => {
-                    regInput.addEventListener('change', () => {
-                        calculation.indication = indication;
-                        calculation.regimen = indication.regimens[regInput.value];
-                        document.getElementById('btn-next-2').disabled = false;
+                container.querySelectorAll('input').forEach(input => {
+                    input.addEventListener('change', () => {
+                        calculation.regimen = indication.regimens[input.value];
+                        document.getElementById('btn-next-3').disabled = false;
                     });
                 });
             } else {
-                // Только одна схема (старая структура или regimens[0])
-                regimenContainer.style.display = 'none';
-                calculation.indication = indication;
+                // Только одна схема - пропускаем этот шаг
                 calculation.regimen = indication.regimens ? indication.regimens[0] : indication;
-                document.getElementById('btn-next-2').disabled = false;
+                goToStep(4); // Пропускаем сразу к шагу 4 (вес)
             }
-        });
-    });
-}
+        }
         
         // Validate weight
         function validateWeight() {
@@ -738,7 +738,7 @@ function populateIndications() {
                 calculation.ageGroup = ageRadio ? ageRadio.value : null;
             }
             
-            document.getElementById('btn-next-3').disabled = !valid;
+            document.getElementById('btn-next-4').disabled = !valid;
         }
         
         // Populate formulations
@@ -759,7 +759,7 @@ function populateIndications() {
             container.querySelectorAll('input').forEach(input => {
                 input.addEventListener('change', () => {
                     calculation.formulation = input.value;
-                    document.getElementById('btn-next-4').disabled = false;
+                    document.getElementById('btn-next-5').disabled = false;
                 });
             });
         }
@@ -817,166 +817,191 @@ function populateIndications() {
             }
         }
         
-// Calculate dose
-function calculate() {
-    const ind = calculation.indication;
-    
-    // Get mg/kg dose
-    let mgPerKg = 15; // default
-    
-    // Check for neonatal special dosing
-    if (calculation.ageGroup === 'neonate' && 
-        drugData.ageRestrictions?.neonate?.specialDosing) {
-        const match = drugData.ageRestrictions.neonate.dose.match(/(\d+\.?\d*)/);
-        mgPerKg = match ? parseFloat(match[1]) : 10;
-    } else {
-        const match = ind.dosing.match(/(\d+\.?\d*)\s*mg\/kg/);
-        mgPerKg = match ? parseFloat(match[1]) : 15;
-    }
-    
-    // Calculate dose in mg
-    const doseMg = mgPerKg * calculation.weight;
-    
-    // Calculate volume or tablets
-    let adminText = '';
-    let tabletOptionsHtml = '';
-    
-    if (calculation.formulation === 'suspension') {
-        let mgPerMl;
-        
-        if (calculation.concentration.custom) {
-            mgPerMl = calculation.concentration.mg / calculation.concentration.ml;
-        } else {
-            const parts = calculation.concentration.concentration.match(/(\d+\.?\d*)mg\/(\d+\.?\d*)ml/);
-            mgPerMl = parseFloat(parts[1]) / parseFloat(parts[2]);
-        }
-        
-        const volumeMl = doseMg / mgPerMl;
-        adminText = `${volumeMl.toFixed(1)} ml (suspension ${calculation.concentration.concentration}) ${ind.frequency}, ${ind.duration}`;
-        
-    } else {
-        // Tablets with divisible parts
-        const strength = parseFloat(calculation.concentration.strength.match(/(\d+)/)[1]);
-        const exactTablets = doseMg / strength;
-        
-        if (calculation.concentration.divisible && calculation.concentration.divisibleParts) {
-            // Show calculated dose first
-            adminText = `Calculated: ${exactTablets.toFixed(2)} tablet(s) = ${doseMg.toFixed(1)} mg`;
+        // Calculate dose (ОБНОВЛЕННАЯ!)
+        function calculate() {
+            const regimen = calculation.regimen;
             
-            // Calculate all available options
-            const allOptions = calculation.concentration.divisibleParts.map(part => {
-                const actualMg = part * strength;
-                const actualMgPerKg = actualMg / calculation.weight;
-                const deviation = ((actualMg - doseMg) / doseMg * 100);
+            // Get mg/kg dose from regimen
+            let mgPerKg = 10; // default
+            
+            // Check for neonatal special dosing
+            if (calculation.ageGroup === 'neonate' && 
+                drugData.ageRestrictions?.neonate?.specialDosing) {
+                const match = drugData.ageRestrictions.neonate.dose.match(/(\d+\.?\d*)/);
+                mgPerKg = match ? parseFloat(match[1]) : 10;
+            } else {
+                // Extract mg/kg from regimen.dosing
+                const match = regimen.dosing.match(/(\d+\.?\d*)\s*mg\/kg/);
+                mgPerKg = match ? parseFloat(match[1]) : 10;
+            }
+            
+            // Calculate dose in mg
+            const doseMg = mgPerKg * calculation.weight;
+            
+            // Check max dose if specified
+            let maxDose = null;
+            if (regimen.maxDose) {
+                const maxMatch = regimen.maxDose.match(/(\d+\.?\d*)/);
+                maxDose = maxMatch ? parseFloat(maxMatch[1]) : null;
+            }
+            
+            // Apply max dose if needed
+            const finalDoseMg = maxDose && doseMg > maxDose ? maxDose : doseMg;
+            
+            // Calculate volume or tablets
+            let adminText = '';
+            let tabletOptionsHtml = '';
+            
+            if (calculation.formulation === 'suspension') {
+                let mgPerMl;
                 
-                return { part, actualMg, actualMgPerKg, deviation };
-            });
-            
-            // Find best option LOWER than calculated dose
-            const lowerOptions = allOptions.filter(opt => opt.deviation < 0);
-            const bestLower = lowerOptions.length > 0 
-                ? lowerOptions.reduce((best, current) => 
-                    (current.deviation > best.deviation) ? current : best)
-                : null;
-            
-            // Find best option HIGHER than calculated dose
-            const higherOptions = allOptions.filter(opt => opt.deviation > 0);
-            const bestHigher = higherOptions.length > 0 
-                ? higherOptions.reduce((best, current) => 
-                    (current.deviation < best.deviation) ? current : best)
-                : null;
-            
-            tabletOptionsHtml = '<div style="margin-top: 15px; padding: 15px; background: #f8f9ff; border-radius: 8px;">';
-            tabletOptionsHtml += '<strong>💊 Available tablet options:</strong><br><br>';
-            
-            // Function to render one option
-            function renderOption(option, isLower) {
-                const deviation = option.deviation;
-                
-                let icon = '';
-                let color = '';
-                let note = '';
-                
-                if (Math.abs(deviation) < 5) {
-                    icon = '✅';
-                    color = 'color: #4caf50; font-weight: 600;';
-                    note = 'ACCEPTABLE';
-                } else if (Math.abs(deviation) < 15) {
-                    icon = '⚠️';
-                    color = 'color: #ff9800; font-weight: 600;';
-                    note = isLower ? 'slightly lower' : 'slightly higher';
+                if (calculation.concentration.custom) {
+                    mgPerMl = calculation.concentration.mg / calculation.concentration.ml;
                 } else {
-                    icon = '🔴';
-                    color = 'color: #f44336; font-weight: 600;';
-                    note = isLower ? 'DOSE TOO LOW' : 'DOSE TOO HIGH';
+                    const parts = calculation.concentration.concentration.match(/(\d+\.?\d*)mg\/(\d+\.?\d*)ml/);
+                    mgPerMl = parseFloat(parts[1]) / parseFloat(parts[2]);
                 }
                 
-                let html = `<div style="margin-bottom: 10px; padding: 10px; background: white; border-radius: 5px; border-left: 4px solid ${Math.abs(deviation) < 5 ? '#4caf50' : Math.abs(deviation) < 15 ? '#ff9800' : '#f44336'}">`;
-                html += `${icon} <strong>${option.part} tablet(s)</strong> = ${option.actualMg.toFixed(1)} mg (${option.actualMgPerKg.toFixed(1)} mg/kg)<br>`;
-                html += `<span style="${color}">Deviation: ${deviation > 0 ? '+' : ''}${deviation.toFixed(1)}% - ${note}</span>`;
-                html += `</div>`;
-                return html;
-            }
-            
-            // Show LOWER option (if exists)
-            if (bestLower) {
-                tabletOptionsHtml += '<div style="margin-bottom: 5px; font-size: 14px; color: #666;">Lower dose option:</div>';
-                tabletOptionsHtml += renderOption(bestLower, true);
+                const volumeMl = finalDoseMg / mgPerMl;
+                adminText = `${volumeMl.toFixed(1)} ml (suspension ${calculation.concentration.concentration}) ${regimen.frequency}, ${regimen.duration}`;
+                
+                // Добавляем warning про бутыльки если есть bottleSizes
+                if (calculation.concentration.bottleSizes) {
+                    const dailyMl = volumeMl;
+                    const totalMl = dailyMl * parseFloat(regimen.duration.match(/\d+/)[0]);
+                    const bottleSize = calculation.concentration.bottleSizes[0]; // стандартный размер
+                    
+                    if (totalMl > bottleSize) {
+                        const bottlesNeeded = Math.ceil(totalMl / bottleSize);
+                        adminText += `\n⚠️ BOTTLE WARNING: Need ${bottlesNeeded} bottle(s) for full course`;
+                    }
+                }
+                
             } else {
-                tabletOptionsHtml += '<div style="margin-bottom: 10px; padding: 10px; background: #fff3e0; border-radius: 5px;">';
-                tabletOptionsHtml += '⚠️ <strong>No lower dose tablet option available</strong><br>';
-                tabletOptionsHtml += 'Consider oral suspension or compounded formulation';
-                tabletOptionsHtml += '</div>';
+                // Tablets with divisible parts
+                const strength = parseFloat(calculation.concentration.strength.match(/(\d+)/)[1]);
+                const exactTablets = finalDoseMg / strength;
+                
+                if (calculation.concentration.divisible && calculation.concentration.divisibleParts) {
+                    // Show calculated dose first
+                    adminText = `Calculated: ${exactTablets.toFixed(2)} tablet(s) = ${finalDoseMg.toFixed(1)} mg`;
+                    
+                    // Calculate all available options
+                    const allOptions = calculation.concentration.divisibleParts.map(part => {
+                        const actualMg = part * strength;
+                        const actualMgPerKg = actualMg / calculation.weight;
+                        const deviation = ((actualMg - finalDoseMg) / finalDoseMg * 100);
+                        
+                        return { part, actualMg, actualMgPerKg, deviation };
+                    });
+                    
+                    // Find best option LOWER than calculated dose
+                    const lowerOptions = allOptions.filter(opt => opt.deviation < 0);
+                    const bestLower = lowerOptions.length > 0 
+                        ? lowerOptions.reduce((best, current) => 
+                            (current.deviation > best.deviation) ? current : best)
+                        : null;
+                    
+                    // Find best option HIGHER than calculated dose
+                    const higherOptions = allOptions.filter(opt => opt.deviation > 0);
+                    const bestHigher = higherOptions.length > 0 
+                        ? higherOptions.reduce((best, current) => 
+                            (current.deviation < best.deviation) ? current : best)
+                        : null;
+                    
+                    tabletOptionsHtml = '<div style="margin-top: 15px; padding: 15px; background: #f8f9ff; border-radius: 8px;">';
+                    tabletOptionsHtml += '<strong>💊 Available tablet options:</strong><br><br>';
+                    
+                    // Function to render one option
+                    function renderOption(option, isLower) {
+                        const deviation = option.deviation;
+                        
+                        let icon = '';
+                        let color = '';
+                        let note = '';
+                        
+                        if (Math.abs(deviation) < 5) {
+                            icon = '✅';
+                            color = 'color: #4caf50; font-weight: 600;';
+                            note = 'ACCEPTABLE';
+                        } else if (Math.abs(deviation) < 15) {
+                            icon = '⚠️';
+                            color = 'color: #ff9800; font-weight: 600;';
+                            note = isLower ? 'slightly lower' : 'slightly higher';
+                        } else {
+                            icon = '🔴';
+                            color = 'color: #f44336; font-weight: 600;';
+                            note = isLower ? 'DOSE TOO LOW' : 'DOSE TOO HIGH';
+                        }
+                        
+                        let html = `<div style="margin-bottom: 10px; padding: 10px; background: white; border-radius: 5px; border-left: 4px solid ${Math.abs(deviation) < 5 ? '#4caf50' : Math.abs(deviation) < 15 ? '#ff9800' : '#f44336'}">`;
+                        html += `${icon} <strong>${option.part} tablet(s)</strong> = ${option.actualMg.toFixed(1)} mg (${option.actualMgPerKg.toFixed(1)} mg/kg)<br>`;
+                        html += `<span style="${color}">Deviation: ${deviation > 0 ? '+' : ''}${deviation.toFixed(1)}% - ${note}</span>`;
+                        html += `</div>`;
+                        return html;
+                    }
+                    
+                                     // Show LOWER option (if exists)
+                    if (bestLower) {
+                        tabletOptionsHtml += '<div style="margin-bottom: 5px; font-size: 14px; color: #666;">Lower dose option:</div>';
+                        tabletOptionsHtml += renderOption(bestLower, true);
+                    } else {
+                        tabletOptionsHtml += '<div style="margin-bottom: 10px; padding: 10px; background: #fff3e0; border-radius: 5px;">';
+                        tabletOptionsHtml += '⚠️ <strong>No lower dose tablet option available</strong><br>';
+                        tabletOptionsHtml += 'Consider oral suspension or compounded formulation';
+                        tabletOptionsHtml += '</div>';
+                    }
+                    
+                    // Show HIGHER option (if exists)
+                    if (bestHigher) {
+                        tabletOptionsHtml += '<div style="margin-bottom: 5px; font-size: 14px; color: #666;">Higher dose option:</div>';
+                        tabletOptionsHtml += renderOption(bestHigher, false);
+                    } else {
+                        tabletOptionsHtml += '<div style="margin-bottom: 10px; padding: 10px; background: #fff3e0; border-radius: 5px;">';
+                        tabletOptionsHtml += '⚠️ <strong>Maximum tablet dose reached</strong><br>';
+                        tabletOptionsHtml += 'Consider: 1) Oral suspension, 2) Higher strength tablets (if available), 3) Consult senior clinician';
+                        tabletOptionsHtml += '</div>';
+                    }
+                    
+                    // Check if any option is within 15%
+                    const hasAcceptableOption = allOptions.some(opt => Math.abs(opt.deviation) < 15);
+                    
+                    if (!hasAcceptableOption && (bestLower || bestHigher)) {
+                        tabletOptionsHtml += '<div style="margin-top: 10px; padding: 10px; background: #ffebee; border-radius: 5px;">';
+                        tabletOptionsHtml += '🔴 <strong>Recommendation:</strong> Consider alternative formulation (suspension) or consult senior clinician';
+                        tabletOptionsHtml += '</div>';
+                    }
+                    
+                    tabletOptionsHtml += '</div>';
+                } else {
+                    // Non-divisible tablet
+                    const tablets = finalDoseMg / strength;
+                    adminText = `${tablets.toFixed(2)} tablet(s) of ${calculation.concentration.strength} ${regimen.frequency}, ${regimen.duration}`;
+                    
+                    if (!calculation.concentration.divisible && tablets % 1 !== 0) {
+                        adminText += ' ⚠️ Note: This tablet should not be split - consider alternative formulation';
+                    }
+                }
             }
             
-            // Show HIGHER option (if exists)
-            if (bestHigher) {
-                tabletOptionsHtml += '<div style="margin-bottom: 5px; font-size: 14px; color: #666;">Higher dose option:</div>';
-                tabletOptionsHtml += renderOption(bestHigher, false);
-            } else {
-                tabletOptionsHtml += '<div style="margin-bottom: 10px; padding: 10px; background: #fff3e0; border-radius: 5px;">';
-                tabletOptionsHtml += '⚠️ <strong>Maximum tablet dose reached</strong><br>';
-                tabletOptionsHtml += 'Consider: 1) Oral suspension, 2) Higher strength tablets (if available), 3) Consult senior clinician';
-                tabletOptionsHtml += '</div>';
-            }
+            // Display results
+            displayResults({
+                patient: `Weight: ${calculation.weight} kg${calculation.ageGroup ? ', ' + formatAge(calculation.ageGroup) : ''}`,
+                drug: drugData.drugName,
+                indication: calculation.indication.condition,
+                regimen: regimen.name || 'Standard regimen',
+                dose: `${mgPerKg} mg/kg ${regimen.duration}`,
+                singleDose: `${finalDoseMg.toFixed(1)} mg`,
+                admin: adminText,
+                tabletOptions: tabletOptionsHtml,
+                source: regimen.source,
+                verified: selectedDrug.verified,
+                notes: drugData.importantNotes || [],
+                warning: regimen.warning || null
+            });
             
-            // Check if any option is within 15%
-            const hasAcceptableOption = allOptions.some(opt => Math.abs(opt.deviation) < 15);
-            
-            if (!hasAcceptableOption && (bestLower || bestHigher)) {
-                tabletOptionsHtml += '<div style="margin-top: 10px; padding: 10px; background: #ffebee; border-radius: 5px;">';
-                tabletOptionsHtml += '🔴 <strong>Recommendation:</strong> Consider alternative formulation (suspension) or consult senior clinician';
-                tabletOptionsHtml += '</div>';
-            }
-            
-            tabletOptionsHtml += '</div>';
-        } else {
-            // Non-divisible tablet
-            const tablets = doseMg / strength;
-            adminText = `${tablets.toFixed(2)} tablet(s) of ${calculation.concentration.strength} ${ind.frequency}, ${ind.duration}`;
-            
-            if (!calculation.concentration.divisible && tablets % 1 !== 0) {
-                adminText += ' ⚠️ Note: This tablet should not be split - consider alternative formulation';
-            }
+            goToStep(7);
         }
-    }
-    
-    // Display results
-    displayResults({
-        patient: `Weight: ${calculation.weight} kg${calculation.ageGroup ? ', ' + formatAge(calculation.ageGroup) : ''}`,
-        drug: drugData.drugName,
-        indication: ind.condition,
-        dose: `${mgPerKg} mg/kg ${ind.duration}`,
-        singleDose: `${doseMg.toFixed(1)} mg`,
-        admin: adminText,
-        tabletOptions: tabletOptionsHtml,
-        source: ind.source,
-        verified: selectedDrug.verified,
-        notes: drugData.importantNotes || []
-    });
-    
-    goToStep(6);
-}
         
         function formatAge(group) {
             const labels = {
@@ -992,12 +1017,19 @@ function calculate() {
         function displayResults(data) {
             document.getElementById('result-patient').textContent = data.patient;
             
-            document.getElementById('result-dose').innerHTML = `
-                <strong>Drug:</strong> ${data.drug}<br>
-                <strong>Indication:</strong> ${data.indication}<br>
-                <strong>Dose:</strong> ${data.dose}<br>
-                <strong>Single Dose:</strong> ${data.singleDose}
-            `;
+            let doseHtml = `<strong>Drug:</strong> ${data.drug}<br>`;
+            doseHtml += `<strong>Indication:</strong> ${data.indication}<br>`;
+            doseHtml += `<strong>Regimen:</strong> ${data.regimen}<br>`;
+            doseHtml += `<strong>Dose:</strong> ${data.dose}<br>`;
+            doseHtml += `<strong>Single Dose:</strong> ${data.singleDose}`;
+            
+            if (data.warning) {
+                doseHtml += `<br><div style="margin-top: 10px; padding: 10px; background: #ffebee; border-radius: 5px; color: #d32f2f;">`;
+                doseHtml += `<strong>⚠️ WARNING:</strong> ${data.warning}`;
+                doseHtml += `</div>`;
+            }
+            
+            document.getElementById('result-dose').innerHTML = doseHtml;
             
             document.getElementById('result-admin').textContent = data.admin;
             
@@ -1035,47 +1067,60 @@ function calculate() {
         function populateMoreInfo() {
             const content = document.getElementById('more-info-content');
             
-            if (drugData.moreInformation && drugData.moreInformation.overdoseWarning) {
-                const od = drugData.moreInformation.overdoseWarning;
+            if (drugData.moreInformation) {
+                let html = '';
                 
-                let html = `<h3 style="color: #ff9800; margin-bottom: 15px;">${od.title}</h3>`;
-                html += `<p style="margin-bottom: 15px;"><strong>${od.definition}</strong></p>`;
+                // Bottle warning
+                if (drugData.moreInformation.bottleWarning) {
+                    const bw = drugData.moreInformation.bottleWarning;
+                    html += `<h3 style="color: #ff9800; margin-bottom: 15px;">${bw.title}</h3>`;
+                    html += `<p style="margin-bottom: 10px;"><strong>${bw.warning}</strong></p>`;
+                    html += `<p style="margin-bottom: 10px;">${bw.calculation}</p>`;
+                    html += `<p style="margin-bottom: 15px;">${bw.recommendation}</p>`;
+                }
                 
-                od.management.forEach(item => {
-                    if (item.timing) {
-                        html += `<h4 style="color: #667eea; margin-top: 20px; margin-bottom: 10px;">${item.timing}:</h4>`;
-                        html += '<ul style="margin-left: 20px; margin-bottom: 15px;">';
-                        item.actions.forEach(action => {
-                            html += `<li>${action}</li>`;
-                        });
-                        html += '</ul>';
-                    }
+                // Overdose warning (если есть, как у парацетамола)
+                if (drugData.moreInformation.overdoseWarning) {
+                    const od = drugData.moreInformation.overdoseWarning;
+                    html += `<h3 style="color: #ff9800; margin-top: 20px; margin-bottom: 15px;">${od.title}</h3>`;
+                    html += `<p style="margin-bottom: 15px;"><strong>${od.definition}</strong></p>`;
                     
-                    if (item.antidote) {
-                        html += `<h4 style="color: #667eea; margin-top: 20px; margin-bottom: 10px;">${item.antidote}:</h4>`;
-                        html += '<ul style="margin-left: 20px;">';
-                        item.dosing.forEach(dose => {
-                            html += `<li>${dose}</li>`;
-                        });
-                        html += '</ul>';
-                        
-                        if (item.administration) {
-                            html += `<p style="margin-top: 10px;"><strong>Administration:</strong> ${item.administration}</p>`;
-                        }
-                        
-                        if (item.notes) {
-                            html += '<p style="margin-top: 10px;"><strong>Notes:</strong></p><ul style="margin-left: 20px;">';
-                            item.notes.forEach(note => {
-                                html += `<li>${note}</li>`;
+                    od.management.forEach(item => {
+                        if (item.timing) {
+                            html += `<h4 style="color: #667eea; margin-top: 20px; margin-bottom: 10px;">${item.timing}:</h4>`;
+                            html += '<ul style="margin-left: 20px; margin-bottom: 15px;">';
+                            item.actions.forEach(action => {
+                                html += `<li>${action}</li>`;
                             });
                             html += '</ul>';
                         }
                         
-                        html += `<p style="margin-top: 10px; font-size: 12px; color: #667eea;"><em>Source: ${item.source}</em></p>`;
-                    }
-                });
+                        if (item.antidote) {
+                            html += `<h4 style="color: #667eea; margin-top: 20px; margin-bottom: 10px;">${item.antidote}:</h4>`;
+                            html += '<ul style="margin-left: 20px;">';
+                            item.dosing.forEach(dose => {
+                                html += `<li>${dose}</li>`;
+                            });
+                            html += '</ul>';
+                            
+                            if (item.administration) {
+                                html += `<p style="margin-top: 10px;"><strong>Administration:</strong> ${item.administration}</p>`;
+                            }
+                            
+                            if (item.notes) {
+                                html += '<p style="margin-top: 10px;"><strong>Notes:</strong></p><ul style="margin-left: 20px;">';
+                                item.notes.forEach(note => {
+                                    html += `<li>${note}</li>`;
+                                });
+                                html += '</ul>';
+                            }
+                            
+                            html += `<p style="margin-top: 10px; font-size: 12px; color: #667eea;"><em>Source: ${item.source}</em></p>`;
+                        }
+                    });
+                }
                 
-                content.innerHTML = html;
+                content.innerHTML = html || '<p>No additional information available for this medication.</p>';
             } else {
                 content.innerHTML = '<p>No additional information available for this medication.</p>';
             }
@@ -1085,6 +1130,7 @@ function calculate() {
         function reset() {
             calculation = {
                 indication: null,
+                regimen: null,
                 weight: null,
                 ageGroup: null,
                 formulation: null,
@@ -1092,6 +1138,7 @@ function calculate() {
             };
             
             document.getElementById('drug-select').value = '';
+            document.getElementById('drug-search').value = '';
             document.getElementById('weight-input').value = '';
             document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
             
