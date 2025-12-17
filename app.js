@@ -3,6 +3,11 @@
 // Application Logic
 // ===========================
 
+// Global function declarations (must be at top for inline onclick handlers)
+window.handleIndicationSelection = handleIndicationSelection;
+window.handleFormulationSelection = handleFormulationSelection;
+window.handleConcentrationSelection = handleConcentrationSelection;
+
 // Global State
 let currentStep = 1;
 let drugsList = [];
@@ -176,11 +181,19 @@ function populateIndications() {
     
     container.innerHTML = selectedDrugData.indications.map((ind, index) => `
         <label>
-            <input type="radio" name="indication" value="${index}" onchange="handleIndicationSelection(${index})">
+            <input type="radio" name="indication" value="${index}" data-indication-index="${index}">
             <span class="indication-dose">${ind.condition}: ${ind.dosing}</span>
             <span class="indication-source">[${ind.source}]</span>
         </label>
     `).join('');
+    
+    // Add event listeners to radio buttons
+    container.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            const index = parseInt(e.target.dataset.indicationIndex);
+            handleIndicationSelection(index);
+        });
+    });
 }
 
 function handleIndicationSelection(index) {
@@ -254,7 +267,7 @@ function populateFormulations() {
     if (formulations.suspension && formulations.suspension.length > 0) {
         html += `
             <label>
-                <input type="radio" name="formulation" value="suspension" onchange="handleFormulationSelection('suspension')">
+                <input type="radio" name="formulation" value="suspension" data-formulation-type="suspension">
                 Oral Suspension / Syrup
             </label>
         `;
@@ -263,13 +276,21 @@ function populateFormulations() {
     if (formulations.tablet && formulations.tablet.length > 0) {
         html += `
             <label>
-                <input type="radio" name="formulation" value="tablet" onchange="handleFormulationSelection('tablet')">
+                <input type="radio" name="formulation" value="tablet" data-formulation-type="tablet">
                 Tablets
             </label>
         `;
     }
     
     container.innerHTML = html;
+    
+    // Add event listeners
+    container.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            const type = e.target.dataset.formulationType;
+            handleFormulationSelection(type);
+        });
+    });
 }
 
 function handleFormulationSelection(type) {
@@ -295,7 +316,7 @@ function populateConcentrations() {
         
         return `
             <label>
-                <input type="radio" name="concentration" value="${index}" onchange="handleConcentrationSelection(${index})">
+                <input type="radio" name="concentration" value="${index}" data-concentration-index="${index}">
                 ${label}
             </label>
         `;
@@ -304,12 +325,20 @@ function populateConcentrations() {
     // Add custom option
     html += `
         <label>
-            <input type="radio" name="concentration" value="custom" onchange="handleConcentrationSelection('custom')">
+            <input type="radio" name="concentration" value="custom" data-concentration-index="custom">
             Custom concentration
         </label>
     `;
     
     container.innerHTML = html;
+    
+    // Add event listeners
+    container.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            const index = e.target.dataset.concentrationIndex;
+            handleConcentrationSelection(index === 'custom' ? 'custom' : parseInt(index));
+        });
+    });
 }
 
 function handleConcentrationSelection(index) {
@@ -566,8 +595,3 @@ function resetCalculator() {
 function printResults() {
     window.print();
 }
-
-// Make functions globally available
-window.handleIndicationSelection = handleIndicationSelection;
-window.handleFormulationSelection = handleFormulationSelection;
-window.handleConcentrationSelection = handleConcentrationSelection;
