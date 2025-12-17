@@ -661,26 +661,61 @@
             window.scrollTo(0, 0);
         }
         
-        // Populate indications
-        function populateIndications() {
-            document.getElementById('drug-name-title').textContent = drugData.drugName;
-            const container = document.getElementById('indications-container');
+// Populate indications
+function populateIndications() {
+    document.getElementById('drug-name-title').textContent = drugData.drugName;
+    const container = document.getElementById('indications-container');
+    
+    // Показываем список показаний
+    container.innerHTML = drugData.indications.map((ind, i) => `
+        <label>
+            <input type="radio" name="indication" value="${i}">
+            <span class="indication-text">${ind.condition}</span>
+        </label>
+    `).join('');
+    
+    // Сбрасываем выбор схемы
+    document.getElementById('regimen-container').style.display = 'none';
+    document.getElementById('btn-next-2').disabled = true;
+    
+    container.querySelectorAll('input').forEach(input => {
+        input.addEventListener('change', () => {
+            const indication = drugData.indications[input.value];
+            const regimenContainer = document.getElementById('regimen-container');
+            const regimenOptions = document.getElementById('regimen-options');
             
-            container.innerHTML = drugData.indications.map((ind, i) => `
-                <label>
-                    <input type="radio" name="indication" value="${i}">
-                    <span class="indication-text">${ind.condition}: ${ind.dosing}</span>
-                    <span class="source-text">[${ind.source}]</span>
-                </label>
-            `).join('');
-            
-            container.querySelectorAll('input').forEach(input => {
-                input.addEventListener('change', () => {
-                    calculation.indication = drugData.indications[input.value];
-                    document.getElementById('btn-next-2').disabled = false;
+            // Проверяем, есть ли варианты схем
+            if (indication.regimens && indication.regimens.length > 1) {
+                // Показываем выбор схемы
+                regimenOptions.innerHTML = indication.regimens.map((regimen, i) => `
+                    <label>
+                        <input type="radio" name="regimen" value="${i}">
+                        <span class="indication-text">${regimen.name}: ${regimen.dosing} × ${regimen.duration}</span>
+                        <span class="source-text">[${regimen.source}]</span>
+                    </label>
+                `).join('');
+                
+                regimenContainer.style.display = 'block';
+                document.getElementById('btn-next-2').disabled = true; // Ждем выбора схемы
+                
+                // Слушатель для выбора схемы
+                regimenOptions.querySelectorAll('input').forEach(regInput => {
+                    regInput.addEventListener('change', () => {
+                        calculation.indication = indication;
+                        calculation.regimen = indication.regimens[regInput.value];
+                        document.getElementById('btn-next-2').disabled = false;
+                    });
                 });
-            });
-        }
+            } else {
+                // Только одна схема (старая структура или regimens[0])
+                regimenContainer.style.display = 'none';
+                calculation.indication = indication;
+                calculation.regimen = indication.regimens ? indication.regimens[0] : indication;
+                document.getElementById('btn-next-2').disabled = false;
+            }
+        });
+    });
+}
         
         // Validate weight
         function validateWeight() {
