@@ -91,6 +91,39 @@
             margin-bottom: 20px;
         }
         
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 5px;
+        }
+        
+        #autocomplete-results {
+            background: white;
+            border: 2px solid #667eea;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+        
+        .autocomplete-item {
+            padding: 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .autocomplete-item:hover {
+            background: #f8f9ff;
+        }
+        
+        .autocomplete-item:last-child {
+            border-bottom: none;
+        }
+        
         select:focus, input:focus {
             outline: none;
             border-color: #667eea;
@@ -309,7 +342,14 @@
             <!-- Step 1: Drug Selection -->
             <section id="step-1" class="step active">
                 <h2>Select Drug</h2>
-                <label for="drug-select">Choose medication:</label>
+                
+                <label for="drug-search">Search medication:</label>
+                <input type="text" id="drug-search" placeholder="Type drug name..." autocomplete="off">
+                <div id="autocomplete-results" style="display: none;"></div>
+                
+                <p style="text-align: center; margin: 15px 0; color: #999;">OR</p>
+                
+                <label for="drug-select">Choose from list:</label>
                 <select id="drug-select">
                     <option value="">-- Select a drug --</option>
                 </select>
@@ -376,6 +416,17 @@
                 <h2>Select Concentration</h2>
                 <label>Choose available strength:</label>
                 <div id="concentration-container" class="radio-group"></div>
+                
+                <div id="custom-concentration" style="display: none; margin-top: 15px; padding: 15px; background: #fafafa; border-radius: 8px;">
+                    <label>Custom concentration:</label>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <input type="number" id="custom-mg" placeholder="mg" min="1" step="1" style="flex: 1; margin: 0;">
+                        <span style="font-weight: 600;">mg in</span>
+                        <input type="number" id="custom-ml" placeholder="ml" min="0.1" step="0.1" style="flex: 1; margin: 0;">
+                        <span style="font-weight: 600;">ml</span>
+                    </div>
+                </div>
+                
                 <div class="button-group">
                     <button id="btn-back-5" class="btn-secondary">← Back</button>
                     <button id="btn-calculate" class="btn-success" disabled>Calculate 🧮</button>
@@ -472,6 +523,7 @@
         // Setup event listeners
         function setupEventListeners() {
             // Step 1
+            document.getElementById('drug-search').addEventListener('input', handleSearch);
             document.getElementById('drug-select').addEventListener('change', handleDrugSelect);
             document.getElementById('btn-next-1').addEventListener('click', () => goToStep(2));
             
@@ -491,10 +543,51 @@
             // Step 5
             document.getElementById('btn-back-5').addEventListener('click', () => goToStep(4));
             document.getElementById('btn-calculate').addEventListener('click', calculate);
+            document.getElementById('custom-mg').addEventListener('input', validateCustomConcentration);
+            document.getElementById('custom-ml').addEventListener('input', validateCustomConcentration);
             
             // Step 6
             document.getElementById('btn-print').addEventListener('click', () => window.print());
             document.getElementById('btn-new').addEventListener('click', reset);
+        }
+        
+        // Handle search input
+        function handleSearch(e) {
+            const searchTerm = e.target.value.toLowerCase().trim();
+            const resultsDiv = document.getElementById('autocomplete-results');
+            
+            if (searchTerm.length < 2) {
+                resultsDiv.style.display = 'none';
+                return;
+            }
+            
+            const matches = drugsList.filter(drug => 
+                drug.name.toLowerCase().includes(searchTerm)
+            );
+            
+            if (matches.length === 0) {
+                resultsDiv.style.display = 'none';
+                return;
+            }
+            
+            resultsDiv.innerHTML = matches.map(drug => `
+                <div class="autocomplete-item" data-drug-id="${drug.id}">
+                    ${drug.name} ${drug.verified ? '🟢' : '🟡'}
+                </div>
+            `).join('');
+            
+            resultsDiv.style.display = 'block';
+            
+            // Add click handlers
+            resultsDiv.querySelectorAll('.autocomplete-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const drugId = item.dataset.drugId;
+                    document.getElementById('drug-select').value = drugId;
+                    document.getElementById('drug-search').value = '';
+                    resultsDiv.style.display = 'none';
+                    handleDrugSelect({ target: { value: drugId } });
+                });
+            });
         }
         
         // Handle drug selection
@@ -597,7 +690,7 @@
             const container = document.getElementById('concentration-container');
             const items = drugData.formulations[calculation.formulation];
             
-            container.innerHTML = items.map((item, i) => {
+            let html = items.map((item, i) => {
                 const label = calculation.formulation === 'suspension' 
                     ? `${item.concentration} ${item.common ? '(standard)' : ''}`
                     : `${item.strength} ${item.divisible ? '(divisible)' : '(do not split)'}`;
@@ -605,12 +698,44 @@
                 return `<label><input type="radio" name="concentration" value="${i}"><span>${label}</span></label>`;
             }).join('');
             
+            // Add custom option
+            html += `<label><input type="radio" name="concentration" value="custom"><span>Custom concentration</span></label>`;
+            
+            container.innerHTML = html;
+            
             container.querySelectorAll('input').forEach(input => {
                 input.addEventListener('change', () => {
-                    calculation.concentration = items[input.value];
-                    document.getElementById('btn-calculate').disabled = false;
+                    if (input.value === 'custom') {
+                        document.getElementById('custom-concentration').style.display = 'block';
+                        document.getElementById('custom-mg').value = '';
+                        document.getElementById('custom-ml').value = '';
+                        calculation.concentration = null;
+                        document.getElementById('btn-calculate').disabled = true;
+                    } else {
+                        document.getElementById('custom-concentration').style.display = 'none';
+                        calculation.concentration = items[input.value];
+                        document.getElementById('btn-calculate').disabled = false;
+                    }
                 });
             });
+        }
+        
+        // Validate custom concentration
+        function validateCustomConcentration() {
+            const mg = parseFloat(document.getElementById('custom-mg').value);
+            const ml = parseFloat(document.getElementById('custom-ml').value);
+            
+            if (mg > 0 && ml > 0) {
+                calculation.concentration = {
+                    concentration: `${mg}mg/${ml}ml`,
+                    custom: true,
+                    mg: mg,
+                    ml: ml
+                };
+                document.getElementById('btn-calculate').disabled = false;
+            } else {
+                document.getElementById('btn-calculate').disabled = true;
+            }
         }
         
         // Calculate dose
@@ -637,8 +762,17 @@
             let adminText = '';
             
             if (calculation.formulation === 'suspension') {
-                const parts = calculation.concentration.concentration.match(/(\d+\.?\d*)mg\/(\d+\.?\d*)ml/);
-                const mgPerMl = parseFloat(parts[1]) / parseFloat(parts[2]);
+                let mgPerMl;
+                
+                if (calculation.concentration.custom) {
+                    // Custom concentration
+                    mgPerMl = calculation.concentration.mg / calculation.concentration.ml;
+                } else {
+                    // Standard concentration
+                    const parts = calculation.concentration.concentration.match(/(\d+\.?\d*)mg\/(\d+\.?\d*)ml/);
+                    mgPerMl = parseFloat(parts[1]) / parseFloat(parts[2]);
+                }
+                
                 const volumeMl = doseMg / mgPerMl;
                 
                 adminText = `${volumeMl.toFixed(1)} ml (suspension ${calculation.concentration.concentration}) ${ind.frequency}, ${ind.duration}`;
