@@ -13,5 +13,10 @@
     "id": "erythromycin",
     "name": "Erythromycin",
     "verified": true
+  },
+  {
+    "id": "cefalexin",
+    "name": "Cefalexin (Cephalexin)",
+    "verified": true
   }
 ]
