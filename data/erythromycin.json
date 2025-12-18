@@ -5,6 +5,91 @@
   
   "indications": [
     {
+      "condition": "Pneumonia/Bronchitis - Atypical (Mycoplasma/Chlamydia)",
+      "regimens": [
+        {
+          "name": "Standard regimen (age >5 years)",
+          "dosing": "12.5 mg/kg every 6 hours",
+          "frequency": "every 6 hours (4 times/day)",
+          "duration": "5 days",
+          "maxDose": "500 mg",
+          "source": "STG Children & Adolescents, Tanzania 2017",
+          "notes": "For children above 5 years with atypical pneumonia or bronchitis"
+        }
+      ]
+    },
+    {
+      "condition": "Pertussis (Whooping cough)",
+      "regimens": [
+        {
+          "name": "Standard pediatric regimen",
+          "dosing": "12.5 mg/kg every 6 hours",
+          "frequency": "every 6 hours (4 times/day)",
+          "duration": "10 days",
+          "maxDose": "500 mg",
+          "source": "STG Children & Adolescents, Tanzania 2017; WHO Pocket Book 2013",
+          "notes": "Does not shorten illness but reduces period of infectiousness. Can be used for prophylaxis in contacts <6 months"
+        },
+        {
+          "name": "Neonatal regimen (separate!)",
+          "dosing": "15-20 mg/kg every 8 hours",
+          "frequency": "every 8 hours (3 times/day)",
+          "duration": "10 days",
+          "source": "Guideline for Neonatal Care, Tz 2019",
+          "warning": "⚠️ Risk of infantile hypertrophic pyloric stenosis in neonates"
+        }
+      ]
+    },
+    {
+      "condition": "Shigellosis",
+      "regimens": [
+        {
+          "name": "Adult guideline",
+          "dosing": "500 mg every 6 hours",
+          "frequency": "every 6 hours (4 times/day)",
+          "duration": "5 days",
+          "source": "STG and NEML Tanzania 2021",
+          "notes": "From adult guidelines, apply cautiously to children"
+        }
+      ]
+    },
+    {
+      "condition": "Cholera",
+      "regimens": [
+        {
+          "name": "WHO/Children guideline (shorter course)",
+          "dosing": "12.5 mg/kg every 6 hours",
+          "frequency": "every 6 hours (4 times/day)",
+          "duration": "3 days",
+          "maxDose": "500 mg",
+          "source": "WHO Pocket Book 2013; STG Children & Adolescents, Tanzania 2017"
+        },
+        {
+          "name": "Adult guideline (longer course)",
+          "dosing": "12.5 mg/kg every 6 hours",
+          "frequency": "every 6 hours (4 times/day)",
+          "duration": "5 days",
+          "maxDose": "500 mg",
+          "source": "STG and NEML Tanzania 2021"
+        }
+      ]
+    },
+    {
+      "condition": "Skin/Soft Tissue Infections",
+      "regimens": [
+        {
+          "name": "Standard regimen",
+          "dosing": "12.5 mg/kg every 6 hours",
+          "frequency": "every 6 hours (4 times/day)",
+          "duration": "7 days",
+          "maxDose": "500 mg",
+          "source": "STG Children & Adolescents, Tanzania 2017",
+          "notes": "Includes: Impetigo, Cellulitis (if PCN allergy), Boil/Furuncle (if PCN allergy), Staphylococcal Scalded Skin Syndrome (if PCN allergy)",
+          "warning": "⚠️ For Staphylococcal Scalded Skin Syndrome: PLUS topical Mupirocin ointment 2% every 12 hours"
+        }
+      ]
+    },
+    {
       "condition": "Chlamydia conjunctivitis (neonates)",
       "regimens": [
         {
@@ -33,63 +118,6 @@
           "frequency": "every 8 hours (3 times/day)",
           "duration": "14 days",
           "source": "Guideline for Neonatal Care, Tz 2019"
-        }
-      ]
-    },
-    {
-      "condition": "Pertussis (Whooping cough)",
-      "regimens": [
-        {
-          "name": "Standard pediatric regimen",
-          "dosing": "12.5 mg/kg every 6 hours",
-          "frequency": "every 6 hours (4 times/day)",
-          "duration": "10 days",
-          "maxDose": "500 mg",
-          "source": "STG Children & Adolescents, Tanzania 2017; WHO Pocket Book 2013",
-          "notes": "Does not shorten illness but reduces period of infectiousness. Can be used for prophylaxis in contacts <6 months"
-        },
-        {
-          "name": "Neonatal regimen (separate!)",
-          "dosing": "15-20 mg/kg every 8 hours",
-          "frequency": "every 8 hours (3 times/day)",
-          "duration": "10 days",
-          "source": "Guideline for Neonatal Care, Tz 2019",
-          "warning": "⚠️ Risk of infantile hypertrophic pyloric stenosis in neonates"
-        }
-      ]
-    },
-    {
-      "condition": "Cholera",
-      "regimens": [
-        {
-          "name": "WHO/Children guideline (shorter course)",
-          "dosing": "12.5 mg/kg every 6 hours",
-          "frequency": "every 6 hours (4 times/day)",
-          "duration": "3 days",
-          "maxDose": "500 mg",
-          "source": "WHO Pocket Book 2013; STG Children & Adolescents, Tanzania 2017"
-        },
-        {
-          "name": "Adult guideline (longer course)",
-          "dosing": "12.5 mg/kg every 6 hours",
-          "frequency": "every 6 hours (4 times/day)",
-          "duration": "5 days",
-          "maxDose": "500 mg",
-          "source": "STG and NEML Tanzania 2021"
-        }
-      ]
-    },
-    {
-      "condition": "Pneumonia - Atypical (Mycoplasma)",
-      "regimens": [
-        {
-          "name": "Standard regimen (age >5 years)",
-          "dosing": "12.5 mg/kg every 6 hours",
-          "frequency": "every 6 hours (4 times/day)",
-          "duration": "5 days",
-          "maxDose": "500 mg",
-          "source": "STG Children & Adolescents, Tanzania 2017",
-          "notes": "For children above 5 years with atypical pneumonia"
         }
       ]
     },
@@ -136,48 +164,6 @@
       ]
     },
     {
-      "condition": "Impetigo contagiosa",
-      "regimens": [
-        {
-          "name": "Standard regimen",
-          "dosing": "12.5 mg/kg every 6 hours",
-          "frequency": "every 6 hours (4 times/day)",
-          "duration": "7 days",
-          "maxDose": "500 mg",
-          "source": "STG Children & Adolescents, Tanzania 2017"
-        }
-      ]
-    },
-    {
-      "condition": "Staphylococcal Scalded Skin Syndrome",
-      "regimens": [
-        {
-          "name": "Penicillin allergy alternative",
-          "dosing": "12.5 mg/kg every 6 hours",
-          "frequency": "every 6 hours (4 times/day)",
-          "duration": "7 days",
-          "maxDose": "500 mg",
-          "source": "STG Children & Adolescents, Tanzania 2017",
-          "warning": "⚠️ PLUS topical Mupirocin ointment 2% every 12 hours",
-          "notes": "If allergic to penicillin"
-        }
-      ]
-    },
-    {
-      "condition": "Boil (Furuncle)",
-      "regimens": [
-        {
-          "name": "Penicillin allergy alternative",
-          "dosing": "12.5 mg/kg every 6 hours",
-          "frequency": "every 6 hours (4 times/day)",
-          "duration": "7 days",
-          "maxDose": "500 mg",
-          "source": "STG Children & Adolescents, Tanzania 2017",
-          "notes": "If allergic to penicillin"
-        }
-      ]
-    },
-    {
       "condition": "Acne (severe nodular)",
       "regimens": [
         {
@@ -191,7 +177,7 @@
       ]
     },
     {
-      "condition": "Acute Rheumatic Fever - Treatment",
+      "condition": "Acute Rheumatic Fever - Treatment (if penicillin allergy)",
       "regimens": [
         {
           "name": "Penicillin allergy alternative",
@@ -218,87 +204,6 @@
       ]
     },
     {
-      "condition": "Genital Ulcer Syndrome",
-      "regimens": [
-        {
-          "name": "Penicillin allergy alternative (adolescents)",
-          "dosing": "500 mg 4 times per day",
-          "frequency": "4 times per day (QID)",
-          "duration": "15 days",
-          "source": "STG Children & Adolescents, Tanzania 2017",
-          "notes": "For adolescents allergic to penicillin"
-        }
-      ]
-    },
-    {
-      "condition": "Vaginal Discharge Syndrome",
-      "regimens": [
-        {
-          "name": "Pregnancy/lactation regimen",
-          "dosing": "500 mg every 12 hours",
-          "frequency": "every 12 hours",
-          "duration": "7 days",
-          "source": "STG Children & Adolescents, Tanzania 2017",
-          "warning": "⚠️ PLUS Ceftriaxone 250 mg IM stat",
-          "notes": "Do NOT give Metronidazole in 1st trimester; Do NOT give Doxycycline/Ciprofloxacin in pregnancy/lactation"
-        }
-      ]
-    },
-    {
-      "condition": "Acute Cellulitis",
-      "regimens": [
-        {
-          "name": "Penicillin allergy alternative",
-          "dosing": "12.5 mg/kg every 6 hours",
-          "frequency": "every 6 hours (4 times/day)",
-          "duration": "7 days",
-          "maxDose": "500 mg",
-          "source": "STG Children & Adolescents, Tanzania 2017",
-          "notes": "If allergic to penicillin"
-        }
-      ]
-    },
-    {
-      "condition": "Congenital Syphilis (after 1st month of life)",
-      "regimens": [
-        {
-          "name": "Penicillin allergy alternative",
-          "dosing": "7.5-12.5 mg/kg every 6 hours",
-          "frequency": "every 6 hours (4 times/day)",
-          "duration": "30 days",
-          "maxDose": "500 mg",
-          "source": "STG and NEML Tanzania 2021",
-          "notes": "Alternative for penicillin allergic patients after first month of life"
-        }
-      ]
-    },
-    {
-      "condition": "Ludwig's Angina",
-      "regimens": [
-        {
-          "name": "Penicillin allergy alternative",
-          "dosing": "500 mg every 6 hours",
-          "frequency": "every 6 hours (4 times/day)",
-          "duration": "5 days",
-          "source": "STG and NEML Tanzania 2021",
-          "notes": "If allergic to penicillin"
-        }
-      ]
-    },
-    {
-      "condition": "Periapical/Dental Abscess",
-      "regimens": [
-        {
-          "name": "Penicillin allergy alternative",
-          "dosing": "500 mg every 8 hours",
-          "frequency": "every 8 hours (3 times/day)",
-          "duration": "7 days",
-          "source": "STG and NEML Tanzania 2021",
-          "notes": "If allergic to penicillin"
-        }
-      ]
-    },
-    {
       "condition": "Plague",
       "regimens": [
         {
@@ -321,19 +226,6 @@
           "duration": "14 days",
           "maxDose": "500 mg",
           "source": "STG and NEML Tanzania 2021"
-        }
-      ]
-    },
-    {
-      "condition": "Shigellosis",
-      "regimens": [
-        {
-          "name": "Adult guideline",
-          "dosing": "500 mg every 6 hours",
-          "frequency": "every 6 hours (4 times/day)",
-          "duration": "5 days",
-          "source": "STG and NEML Tanzania 2021",
-          "notes": "From adult guidelines, apply cautiously to children"
         }
       ]
     },
@@ -372,6 +264,73 @@
           "duration": "7-14 days (decided individually)",
           "source": "STG and NEML Tanzania 2021",
           "notes": "For prevention of infection"
+        }
+      ]
+    },
+    {
+      "condition": "Genital Ulcer Syndrome (if penicillin allergy)",
+      "regimens": [
+        {
+          "name": "Penicillin allergy alternative (adolescents)",
+          "dosing": "500 mg 4 times per day",
+          "frequency": "4 times per day (QID)",
+          "duration": "15 days",
+          "source": "STG Children & Adolescents, Tanzania 2017",
+          "notes": "For adolescents allergic to penicillin"
+        }
+      ]
+    },
+    {
+      "condition": "Vaginal Discharge Syndrome (pregnancy/lactation)",
+      "regimens": [
+        {
+          "name": "Pregnancy/lactation regimen",
+          "dosing": "500 mg every 12 hours",
+          "frequency": "every 12 hours",
+          "duration": "7 days",
+          "source": "STG Children & Adolescents, Tanzania 2017",
+          "warning": "⚠️ PLUS Ceftriaxone 250 mg IM stat",
+          "notes": "Do NOT give Metronidazole in 1st trimester; Do NOT give Doxycycline/Ciprofloxacin in pregnancy/lactation"
+        }
+      ]
+    },
+    {
+      "condition": "Congenital Syphilis - after 1st month (if penicillin allergy)",
+      "regimens": [
+        {
+          "name": "Penicillin allergy alternative",
+          "dosing": "7.5-12.5 mg/kg every 6 hours",
+          "frequency": "every 6 hours (4 times/day)",
+          "duration": "30 days",
+          "maxDose": "500 mg",
+          "source": "STG and NEML Tanzania 2021",
+          "notes": "Alternative for penicillin allergic patients after first month of life"
+        }
+      ]
+    },
+    {
+      "condition": "Ludwig's Angina (if penicillin allergy)",
+      "regimens": [
+        {
+          "name": "Penicillin allergy alternative",
+          "dosing": "500 mg every 6 hours",
+          "frequency": "every 6 hours (4 times/day)",
+          "duration": "5 days",
+          "source": "STG and NEML Tanzania 2021",
+          "notes": "If allergic to penicillin"
+        }
+      ]
+    },
+    {
+      "condition": "Periapical/Dental Abscess (if penicillin allergy)",
+      "regimens": [
+        {
+          "name": "Penicillin allergy alternative",
+          "dosing": "500 mg every 8 hours",
+          "frequency": "every 8 hours (3 times/day)",
+          "duration": "7 days",
+          "source": "STG and NEML Tanzania 2021",
+          "notes": "If allergic to penicillin"
         }
       ]
     }
