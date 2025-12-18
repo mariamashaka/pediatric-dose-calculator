@@ -1,0 +1,205 @@
+{
+  "drugName": "Cefalexin (Cephalexin)",
+  "verificationStatus": "verified",
+  "lastUpdated": "2025-12-18",
+  
+  "indications": [
+    {
+      "condition": "Pharyngitis (streptococcal)",
+      "regimens": [
+        {
+          "name": "Standard regimen",
+          "dosing": "25-50 mg/kg/day divided every 12 hours",
+          "frequency": "every 12 hours",
+          "duration": "Duration decided based on clinical response",
+          "maxDose": "500 mg per dose",
+          "source": "TMDA 2022"
+        }
+      ]
+    },
+    {
+      "condition": "Skin/Soft Tissue Infections",
+      "regimens": [
+        {
+          "name": "Standard regimen",
+          "dosing": "25-50 mg/kg/day divided every 12 hours",
+          "frequency": "every 12 hours",
+          "duration": "Duration decided based on clinical response",
+          "maxDose": "500 mg per dose",
+          "source": "TMDA 2022"
+        }
+      ]
+    },
+    {
+      "condition": "UTI - mild/uncomplicated (TMDA 2022, WHO Pocket Book 2013)",
+      "regimens": [
+        {
+          "name": "TMDA regimen",
+          "dosing": "25-50 mg/kg/day divided every 12 hours",
+          "frequency": "every 12 hours",
+          "duration": "Duration decided based on clinical response",
+          "maxDose": "500 mg per dose",
+          "source": "TMDA 2022"
+        },
+        {
+          "name": "WHO alternative regimen",
+          "dosing": "12.5 mg/kg every 6 hours",
+          "frequency": "every 6 hours (4 times/day)",
+          "duration": "Duration decided based on clinical response",
+          "maxDose": "500 mg per dose",
+          "source": "WHO Pocket Book 2013",
+          "notes": "Alternative to co-trimoxazole"
+        }
+      ]
+    },
+    {
+      "condition": "Otitis media - Acute",
+      "regimens": [
+        {
+          "name": "Standard regimen",
+          "dosing": "25-50 mg/kg/day divided every 8 hours",
+          "frequency": "every 8 hours (3 times/day)",
+          "duration": "Duration decided based on clinical response",
+          "maxDose": "500 mg per dose",
+          "source": "TMDA 2022"
+        }
+      ]
+    },
+    {
+      "condition": "Otitis media - Chronic",
+      "regimens": [
+        {
+          "name": "Standard regimen with ear drops",
+          "dosing": "12.5 mg/kg every 12 hours (maximum 25 mg/kg every 12 hours)",
+          "frequency": "every 12 hours",
+          "duration": "10 days",
+          "maxDose": "500 mg per dose",
+          "source": "STG Children & Adolescents, Tanzania 2017",
+          "warning": "⚠️ PLUS Ciprofloxacin 0.3% ear drops, three drops for 14 days"
+        }
+      ]
+    },
+    {
+      "condition": "Acute Rheumatic Fever (if penicillin allergy)",
+      "regimens": [
+        {
+          "name": "Penicillin allergy alternative",
+          "dosing": "25 mg/kg every 8 hours",
+          "frequency": "every 8 hours (3 times/day)",
+          "duration": "10 days",
+          "maxDose": "500 mg per dose",
+          "source": "STG Children & Adolescents, Tanzania 2017",
+          "notes": "For patients allergic to penicillin"
+        }
+      ]
+    },
+    {
+      "condition": "Bone/Joint Infections",
+      "regimens": [
+        {
+          "name": "Standard regimen",
+          "dosing": "25-50 mg/kg/day divided every 8 hours",
+          "frequency": "every 8 hours (3 times/day)",
+          "duration": "Duration decided based on clinical response",
+          "maxDose": "500 mg per dose",
+          "source": "TMDA 2022"
+        }
+      ]
+    },
+    {
+      "condition": "Dental Infections",
+      "regimens": [
+        {
+          "name": "Standard regimen",
+          "dosing": "25-50 mg/kg/day divided every 8 hours",
+          "frequency": "every 8 hours (3 times/day)",
+          "duration": "Duration decided based on clinical response",
+          "maxDose": "500 mg per dose",
+          "source": "TMDA 2022"
+        }
+      ]
+    },
+    {
+      "condition": "Staphylococcal pustulosis/Bullous impetigo (neonates)",
+      "regimens": [
+        {
+          "name": "Neonatal regimen",
+          "dosing": "15-20 mg/kg every 8 hours",
+          "frequency": "every 8 hours (3 times/day)",
+          "duration": "Duration decided based on clinical response",
+          "source": "Guideline for Neonatal Care, Tz 2019",
+          "notes": "For outpatient treatment with mild infection only"
+        }
+      ]
+    },
+    {
+      "condition": "Thyroglossal/Dermoid/Branchial Cysts",
+      "regimens": [
+        {
+          "name": "Combination regimen",
+          "dosing": "75-100 mg/kg/day divided in 4 doses",
+          "frequency": "every 6 hours (4 times/day)",
+          "duration": "7-14 days",
+          "maxDose": "500 mg per dose",
+          "source": "STG and NEMLIT, Tanzania 2021",
+          "warning": "⚠️ MUST BE USED IN COMBINATION with Ampicillin+Cloxacillin (15 mg/kg every 6-8 hours)"
+        }
+      ]
+    }
+  ],
+  
+  "formulations": {
+    "suspension": [
+      {
+        "concentration": "125mg/5ml",
+        "common": true,
+        "notes": "As monohydrate"
+      },
+      {
+        "concentration": "250mg/5ml",
+        "common": true,
+        "notes": "As monohydrate"
+      }
+    ],
+    "tablet": [
+      {
+        "strength": "250mg",
+        "divisible": true,
+        "divisibleParts": [0.5, 1],
+        "notes": "Capsule - as monohydrate"
+      },
+      {
+        "strength": "500mg",
+        "divisible": true,
+        "divisibleParts": [0.5, 1],
+        "notes": "Capsule - as monohydrate"
+      }
+    ]
+  },
+  
+  "importantNotes": [
+    "Maximum single dose: 500 mg",
+    "For skin/soft tissue, pharyngitis, and mild UTI: may divide dose every 12 hours",
+    "For other infections: divide dose every 8 hours or as directed",
+    "Active against: β-haemolytic streptococci, staphylococci, S. pneumoniae, E. coli, Proteus mirabilis, Klebsiella spp, H. influenzae, B. catarrhalis"
+  ],
+  
+  "moreInformation": {
+    "antibacterialSpectrum": {
+      "title": "Antibacterial Spectrum",
+      "gramPositive": [
+        "β-haemolytic streptococci",
+        "Staphylococci (including coagulase-positive, coagulase-negative, and penicillinase-producing strains)",
+        "Streptococcus pneumoniae"
+      ],
+      "gramNegative": [
+        "Escherichia coli",
+        "Proteus mirabilis",
+        "Klebsiella species",
+        "Haemophilus influenzae",
+        "Branhamella catarrhalis"
+      ],
+      "source": "TMDA 2022"
+    }
+  }
+}
