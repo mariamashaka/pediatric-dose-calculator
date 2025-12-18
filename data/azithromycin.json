@@ -5,7 +5,7 @@
   
   "indications": [
     {
-      "condition": "Pharyngotonsillitis",
+      "condition": "Pharyngotonsillitis (STG Children & Adolescents Tz 2017, AAP Clinical Approach to Tonsillitis 2017)",
       "regimens": [
         {
           "name": "Tanzania 3-day course",
@@ -25,7 +25,7 @@
       ]
     },
     {
-      "condition": "Acute otitis media",
+      "condition": "Acute otitis media (STG Children & Adolescents Tz 2017, STG and NEMLIT Tz 2021)",
       "regimens": [
         {
           "name": "Tanzania 3-day course",
@@ -45,7 +45,7 @@
       ]
     },
     {
-      "condition": "Pneumonia/Bronchitis (atypical)",
+      "condition": "Pneumonia/Bronchitis (atypical) (STG Children & Adolescents Tz 2017, PIDS/IDSA 2011)",
       "regimens": [
         {
           "name": "Tanzania guideline",
@@ -65,7 +65,7 @@
       ]
     },
     {
-      "condition": "Typhoid fever",
+      "condition": "Typhoid fever (STG Children & Adolescents Tz 2017, WHO Pocket Book 2013)",
       "regimens": [
         {
           "name": "Tanzania guideline",
@@ -86,7 +86,7 @@
       ]
     },
     {
-      "condition": "Cholera",
+      "condition": "Cholera (WHO 2010, STG and NEMLIT Tz 2021)",
       "regimens": [
         {
           "name": "WHO/PAHO recommendation",
