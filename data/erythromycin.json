@@ -19,7 +19,7 @@
       ]
     },
     {
-      "condition": "Pertussis (Whooping cough)",
+      "condition": "Pertussis (Whooping cough) (STG Children & Adolescents Tz 2017, WHO Pocket Book 2013, Guideline for Neonatal Care Tz 2019)",
       "regimens": [
         {
           "name": "Standard pediatric regimen",
@@ -54,7 +54,7 @@
       ]
     },
     {
-      "condition": "Cholera",
+      "condition": "Cholera (WHO Pocket Book 2013, STG Children & Adolescents Tz 2017, STG and NEMLIT Tz 2021)",
       "regimens": [
         {
           "name": "WHO/Children guideline (shorter course)",
@@ -103,7 +103,7 @@
       ]
     },
     {
-      "condition": "Chlamydia pneumonia (neonates)",
+      "condition": "Chlamydia pneumonia (neonates) (Guideline for Neonatal Care Tz 2019)",
       "regimens": [
         {
           "name": "Standard neonatal regimen",
