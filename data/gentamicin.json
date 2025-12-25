@@ -1,0 +1,211 @@
+{
+  "drugName": "Gentamicin",
+  "verificationStatus": "verified",
+  "lastUpdated": "2025-12-18",
+  
+  "indications": [
+    {
+      "condition": "Neonatal Infections (0-28 days ONLY)",
+      "regimens": [
+        {
+          "name": "Neonatal protocol",
+          "dosing": "Weight-based: 5 mg/kg OD (≥2.5 kg) or 3 mg/kg OD (<2.5 kg)",
+          "frequency": "once daily",
+          "duration": "7-14 days (depends on condition)",
+          "source": "Guideline for Neonatal Care, Tz 2019; STG Children & Adolescents, Tanzania 2017",
+          "warning": "⚠️ ALWAYS in combination with other antibiotics (see Neonatal Care Guidelines for specific combinations)",
+          "notes": "Includes: Neonatal sepsis, meningitis, pneumonia, omphalitis, bacterial skin infection, HIE, NEC, premature infants <34 weeks prophylaxis. Commonly combined with Ampicillin or Ampiclox."
+        }
+      ]
+    },
+    {
+      "condition": "UTI - Infants <2 months (monotherapy)",
+      "regimens": [
+        {
+          "name": "Monotherapy regimen",
+          "dosing": "7.5 mg/kg once daily",
+          "frequency": "once daily",
+          "duration": "Until fever subsides, then switch to oral antibiotics",
+          "maxDose": "Not specified for infants",
+          "source": "WHO Pocket Book of Hospital Care for Children 2013",
+          "warning": "⚠️ MONOTHERAPY - NOT in combination",
+          "notes": "For young infants <2 months with uncomplicated UTI. Monitor for signs of systemic infection."
+        }
+      ]
+    },
+    {
+      "condition": "Urosepsis/Complicated UTI",
+      "regimens": [
+        {
+          "name": "Combination regimen",
+          "dosing": "7.5 mg/kg once daily",
+          "frequency": "once daily",
+          "duration": "5-10 days (guided by culture results)",
+          "maxDose": "120 mg (adult reference dose)",
+          "source": "STG and NEMLIT, Tanzania 2021; WHO Pocket Book 2013",
+          "warning": "⚠️ In combination with Ampicillin",
+          "notes": "For urosepsis or complicated UTI. Complete 10 days total treatment."
+        }
+      ]
+    },
+    {
+      "condition": "Severe Respiratory Infections",
+      "regimens": [
+        {
+          "name": "Standard regimen",
+          "dosing": "7.5 mg/kg once daily",
+          "frequency": "once daily",
+          "duration": "5-14 days (depends on severity)",
+          "maxDose": "120 mg (adult reference dose)",
+          "source": "STG Children & Adolescents, Tanzania 2017; WHO Pocket Book 2013; STG and NEMLIT Tz 2021",
+          "warning": "⚠️ In combination with Ampicillin/Cloxacillin/Flucloxacillin",
+          "notes": "Includes: Severe pneumonia, pleural effusion/empyema, lung abscess, Klebsiella pneumonia. For pleural effusion/empyema: continue cloxacillin orally for total 3 weeks after improvement."
+        }
+      ]
+    },
+    {
+      "condition": "Meningitis & Septicaemia",
+      "regimens": [
+        {
+          "name": "Standard regimen",
+          "dosing": "7.5 mg/kg once daily",
+          "frequency": "once daily",
+          "duration": "10-14 days",
+          "maxDose": "120 mg (adult reference dose)",
+          "source": "STG Children & Adolescents, Tanzania 2017; STG and NEMLIT, Tanzania 2021",
+          "warning": "⚠️ In combination with Ampicillin ± Cloxacillin",
+          "notes": "Includes: Meningitis (infants <3 months), septicaemia, septic shock, puerperal sepsis. Add Cloxacillin if staphylococcal infection suspected (e.g., impetigo, abscess present)."
+        }
+      ]
+    },
+    {
+      "condition": "Infective Endocarditis (STG Children & Adolescents Tz 2017, STG and NEMLIT Tz 2021)",
+      "regimens": [
+        {
+          "name": "Treatment protocol",
+          "dosing": "7.5 mg/kg once daily",
+          "frequency": "once daily",
+          "duration": "2-6 weeks (depends on organism)",
+          "maxDose": "120 mg (adult reference dose)",
+          "source": "STG Children & Adolescents, Tanzania 2017; STG and NEMLIT, Tanzania 2021",
+          "warning": "⚠️ In combination with Benzyl Penicillin/Ampicillin/Cloxacillin (see guidelines for specific regimens)",
+          "notes": "Duration: 2 weeks for standard protocol, 6 weeks for enterococcal/resistant streptococcal/staphylococcal endocarditis. Monitor serum gentamicin levels every 3-4 days."
+        },
+        {
+          "name": "Prophylaxis (GI/GU procedures)",
+          "dosing": "7.5 mg/kg single dose",
+          "frequency": "single dose at induction",
+          "duration": "Single dose only",
+          "maxDose": "120 mg (adult reference dose)",
+          "source": "STG Children & Adolescents, Tanzania 2017",
+          "warning": "⚠️ In combination with Ampicillin/Amoxicillin IV 50 mg/kg",
+          "notes": "For patients with CHD undergoing dental, gastrointestinal, or genitourinary procedures."
+        }
+      ]
+    },
+    {
+      "condition": "Intra-abdominal/Surgical Infections",
+      "regimens": [
+        {
+          "name": "Standard regimen",
+          "dosing": "7.5 mg/kg once daily",
+          "frequency": "once daily",
+          "duration": "7 days",
+          "maxDose": "120 mg (adult reference dose)",
+          "source": "STG Children & Adolescents, Tanzania 2017; WHO Pocket Book 2013; STG and NEMLIT Tz 2021",
+          "warning": "⚠️ In combination with Ampicillin + Metronidazole",
+          "notes": "Includes: Appendicitis, bowel obstruction, intussusception, abdominal wall defects (gastroschisis/omphalocele), incarcerated hernia. For bowel obstruction/abdominal wall defects: Metronidazole loading dose 15 mg/kg, then 7.5 mg/kg q12h."
+        }
+      ]
+    },
+    {
+      "condition": "Bone/Joint/Soft Tissue Infections",
+      "regimens": [
+        {
+          "name": "Standard regimen",
+          "dosing": "7.5 mg/kg once daily",
+          "frequency": "once daily",
+          "duration": "5-7 days",
+          "maxDose": "120 mg (adult reference dose)",
+          "source": "STG Children & Adolescents, Tanzania 2017; WHO Pocket Book 2013; STG and NEMLIT Tz 2021",
+          "warning": "⚠️ In combination with Cloxacillin/Flucloxacillin ± Metronidazole",
+          "notes": "Includes: Open fractures, osteomyelitis, septic arthritis, burns with septicaemia, necrotizing fasciitis, open wounds. Add Metronidazole if bowel flora suspected."
+        }
+      ]
+    },
+    {
+      "condition": "Other Severe Infections",
+      "regimens": [
+        {
+          "name": "Standard regimen",
+          "dosing": "7.5 mg/kg once daily",
+          "frequency": "once daily",
+          "duration": "5-7 days",
+          "maxDose": "120 mg (adult reference dose)",
+          "source": "STG Children & Adolescents, Tanzania 2017; STG and NEMLIT, Tanzania 2021",
+          "warning": "⚠️ In combination (varies by condition)",
+          "notes": "Includes: Orbital cellulitis (with ceftriaxone/cloxacillin), dental abscess if PCN allergy (with clindamycin), PID (with clindamycin), sequestration syndromes in SCA (with ampicillin). Refer to specific guidelines for combination protocols."
+        }
+      ]
+    }
+  ],
+  
+  "formulations": {
+    "injection": [
+      {
+        "concentration": "10mg/ml in 2ml ampoule",
+        "common": false,
+        "notes": "As sulfate"
+      },
+      {
+        "concentration": "20mg/ml in 2ml ampoule",
+        "common": true,
+        "notes": "As sulfate - PREFER diluted solutions"
+      },
+      {
+        "concentration": "40mg/ml in 2ml ampoule",
+        "common": true,
+        "notes": "As sulfate - AVOID undiluted use, dilute before administration"
+      }
+    ]
+  },
+  
+  "importantNotes": [
+    "⚠️ OTOTOXIC and NEPHROTOXIC - ALWAYS monitor renal function and hearing",
+    "Prefer diluted solutions - AVOID undiluted 40 mg/ml gentamicin",
+    "Risk for adverse effects when given with theophylline",
+    "Maximum adult dose for reference: 120 mg once daily (or 80-160 mg depending on indication)",
+    "ALWAYS given in combination except for uncomplicated UTI in infants <2 months"
+  ],
+  
+  "moreInformation": {
+    "monitoring": {
+      "title": "⚠️ THERAPEUTIC DRUG MONITORING",
+      "requirements": [
+        "Monitor serum gentamicin levels every 3-4 days for prolonged treatment (>5-7 days)",
+        "Peak concentration (1-hour post-dose): should NOT exceed 10 mg/L",
+        "Trough concentration (pre-dose, 2-hour before next dose): should be <2 mg/L",
+        "Adjust dose in renal failure based on creatinine clearance (CrCl)"
+      ],
+      "toxicity": [
+        "Ototoxicity: Monitor hearing, especially in prolonged treatment",
+        "Nephrotoxicity: Monitor serum creatinine and urine output",
+        "Increased risk with concurrent use of other ototoxic/nephrotoxic drugs"
+      ],
+      "drugInteractions": [
+        "Theophylline: Risk for adverse effects",
+        "Furosemide: Increased ototoxicity risk",
+        "Other aminoglycosides: Do not combine",
+        "Neuromuscular blocking agents: Prolonged neuromuscular blockade"
+      ],
+      "source": "STG and NEMLIT, Tanzania 2021"
+    },
+    "administrationGuidance": {
+      "title": "Administration Guidelines",
+      "dilution": "Avoid using undiluted 40 mg/ml solution. Dilute in normal saline or 5% dextrose before IV administration",
+      "routes": "IV (preferred for severe infections) or IM",
+      "infusionTime": "IV: Administer over 30-60 minutes",
+      "compatibility": "Check compatibility before mixing with other antibiotics in same IV line"
+    }
+  }
+}
