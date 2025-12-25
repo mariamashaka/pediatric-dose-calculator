@@ -18,5 +18,15 @@
     "id": "cefalexin",
     "name": "Cefalexin (Cephalexin)",
     "verified": true
+  },
+  {
+    "id": "cefadroxil",
+    "name": "Cefadroxil",
+    "verified": false
+  },
+  {
+    "id": "gentamicin",
+    "name": "Gentamicin",
+    "verified": true
   }
 ]
